@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+.project
+.pydevproject
+.gitignore~
+.idea
+.settings
+*.origs
+db.sqlite3

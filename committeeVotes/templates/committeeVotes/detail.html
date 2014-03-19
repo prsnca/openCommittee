@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="container">
+
+
+    <div class="row">
+        <h3>
+            שם ההצעה
+        </h3>
+        {{ bill.name }}
+    </div>
+
+
+    <div class="row">
+        <h3>
+            תוכן ההצעה
+        </h3>
+        {{ bill.description }}
+    </div>
+
+
+    <div class="row">
+        <h3>
+            הצבעות
+        </h3>
+        <table class="table table-hover">
+            {% for v in votes %}
+            <tr>
+
+                <td>{{v.minister}}</td>
+
+                <td>{{v.vote}}</td>
+
+
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
