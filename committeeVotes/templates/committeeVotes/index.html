@@ -6,10 +6,12 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h3>הצבעות אחרונות</h3>
+            <h3>
+                הצעות אחרונות
+            </h3>
         </div>
 
-        <div>
+        <div class="col-md-6">
             <h3>
                 שרים
             </h3>
@@ -21,7 +23,6 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="text-right">#</th>
                     <th class="text-right">
                         שם ההצעה
                     </th>
@@ -34,8 +35,7 @@
 
                 <tr>
 
-                    <td><a href="{% url 'detail' b.id %}">{{b.id}}</a></td>
-                    <td>{{b.name}}</td>
+                    <td><a href="{% url 'detail' b.id %}">{{b.name}}</a></td>
 
                     <td>{{b.description}}</td>
 
@@ -45,12 +45,17 @@
             </table>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
 
             <table class="table table-hover">
+                <thead>
+                <th>
+                    שם השר
+                </th>
+                </thead>
                 {% for m in ministers %}
                 <tr>
-                    <td>{{m.name}}</td>
+                    <td><a href="{% url 'minister' m.id %}">{{m.name}}</a></td>
                 </tr>
                 {% endfor %}
             </table>

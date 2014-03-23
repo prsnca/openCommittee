@@ -6,5 +6,6 @@
 .gitignore~
 .idea
 .settings
-*.origs
+*.orig
 db.sqlite3
+

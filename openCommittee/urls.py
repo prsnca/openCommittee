@@ -14,6 +14,5 @@ urlpatterns = patterns('',
 
     url(r'^$', views.index, name='index'),
     url(r'^(?P<bill_id>\d+)/$', views.detail, name='detail'),
-    url(r'^(?P<bill_id>\d+)/results/$', views.results, name='results'),
-    url(r'^(?P<bill_id>\d+)/vote/$', views.vote, name='vote'),
+    url(r'^minister/(?P<minister_id>\d+)/$', views.minister_details, name='minister'),
 )

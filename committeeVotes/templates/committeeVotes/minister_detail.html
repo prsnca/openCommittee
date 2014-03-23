@@ -7,31 +7,22 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h2 title="שם ההצעה">
-                {{ bill.name }}
+            <h2>
+                {{ minister.name }}
             </h2>
         </div>
     </div>
-
-
-    <div class="row">
-        <div class="col-md-6">
-            <h3 title="תוכן ההצעה">
-                {{ bill.description }}
-            </h3>
-        </div>
-    </div>
-
-
     <div class="row">
         <div class="col-md-6">
             <h3>
                 הצבעות
             </h3>
+
+
             <table class="table table-hover">
                 <thead>
                 <th>
-                    שם השר
+                    שם ההצעה
                 </th>
                 <th>
                     הצביע
@@ -39,16 +30,13 @@
                 </thead>
                 {% for v in votes %}
                 <tr>
-                    <td><a href="{% url 'minister' v.minister.id %}">{{v.minister}}</a></td>
+                    <td><a href="{% url 'detail' v.bill.id %}">{{v.bill}}</a></td>
                     <td>{{v.vote}}</td>
                 </tr>
                 {% endfor %}
             </table>
         </div>
-
     </div>
-
-
 </div>
 
 

@@ -16,10 +16,9 @@ def detail(request, bill_id):
                'votes' : votes}
     return render(request, 'committeeVotes/detail.html', context)
 
-def results(request, bill_id):
-    return HttpResponse("You're looking at the results of bill %s." % poll_id)
-
-def vote(request, bill_id):
-    return HttpResponse("You're voting on bill %s." % poll_id)
-
-# Create your views here.
+def minister_details(request, minister_id):
+    minister = get_object_or_404(Minister,pk=minister_id)
+    votes = Vote.objects.filter(minister=minister)
+    context = {'minister': minister,
+               'votes' : votes}
+    return render(request, 'committeeVotes/minister_detail.html', context)
