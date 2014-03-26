@@ -28,6 +28,7 @@ class Vote(models.Model):
     meeting = models.ForeignKey(Meeting)
     bill = models.ForeignKey(Bill)
     minister = models.ForeignKey(Minister)
+
     def __unicode__(self):
         return self.minister.name + " voted " + self.vote.typeName
 
