@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Bill(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=500)
     description = models.TextField()
     def __unicode__(self):
         return self.name
@@ -14,7 +14,7 @@ class VoteType(models.Model):
 
 class Meeting(models.Model):
     took_place = models.DateField()
-    proposed_bills = models.ManyToManyField(Bill)
+    proposed_bills = models.ManyToManyField(Bill, blank=True)
     def __unicode__(self):
         return "Meeting #" + str(self.id) + u" - %s" % self.took_place
 

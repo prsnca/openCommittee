@@ -22,31 +22,21 @@
         </div>
     </div>
 
-
     <div class="row">
-        <div class="col-md-6">
-            <h3>
-                הצבעות
-            </h3>
-            <table class="table table-hover">
-                <thead>
-                <th>
-                    שם השר
-                </th>
-                <th>
-                    הצביע
-                </th>
-                </thead>
-                {% for v in votes %}
-                <tr>
-                    <td><a href="{% url 'minister' v.minister.id %}">{{v.minister}}</a></td>
-                    <td>{{v.vote}}</td>
-                </tr>
-                {% endfor %}
-            </table>
+        {% regroup votes by vote.typeName as votes_vote %}
+        {% for voteType in votes_vote %}
+        <div class="col-md-3 voteType">
+            <h4>
+                {{ voteType.grouper }}
+            </h4>
+            {% for v in voteType.list %}
+                <a href="{% url 'minister' v.minister.id %}">{{ v.minister }}</a>
+            {% endfor %}
         </div>
-
+        {% endfor %}
     </div>
+
+
 
 
 </div>
