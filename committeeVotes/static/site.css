@@ -1,3 +1,11 @@
 .voteType {
     text-align: center;
 }
+
+.minister-photo {
+    position: relative;
+    height: 120px;
+    width: 90px;
+    display: inline-block;
+    margin: 9px;
+}

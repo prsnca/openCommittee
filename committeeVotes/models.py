@@ -20,6 +20,7 @@ class Meeting(models.Model):
 
 class Minister(models.Model):
     name = models.CharField(max_length=30)
+    photo = models.CharField(max_length=100)
     def __unicode__(self):
         return self.name
 

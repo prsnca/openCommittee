@@ -83,8 +83,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+STATIC_ROOT = ''
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = "http://www.knesset.gov.il/mk/images/members/"
 
 if os.environ.get('DATABASE_URL'): # Heroku
     import dj_database_url
