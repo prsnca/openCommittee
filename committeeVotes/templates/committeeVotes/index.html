@@ -32,10 +32,30 @@
                 {% for b in bills %}
 
                 <tr>
-                    <td><a href="{% url 'detail' b.id %}">{{b.name}}</a></td>
+                    <td>
+                        <a href="{% url 'detail' b.id %}">
+                            {{b.name}}
+                            <button class="btn btn-info pull-left">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        </a>
+
+                    </td>
                 </tr>
                 {% endfor %}
+            <tr>
+                <td>
+                <div class="pull-left">
+                <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">
+עוד
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+                </td>
+            </tr>
+
             </table>
+
 
         </div>
         <div class="col-md-6">

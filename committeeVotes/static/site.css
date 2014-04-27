@@ -9,3 +9,12 @@
     display: inline-block;
     margin: 9px;
 }
+
+.minister-big-photo {
+    position: relative;
+    height: 450px;
+    width: 300px;
+    display: inline-block;
+    margin: 15px;
+}
+

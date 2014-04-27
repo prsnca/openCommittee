@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load staticfiles %}
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2 title="שם ההצעה">
+                    הצעות חוק
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-right">
+                            שם ההצעה
+                        </th>
+
+                    </tr>
+                    </thead>
+                    {% for b in bills %}
+
+                        <tr>
+                            <td><a href="{% url 'detail' b.id %}">{{ b.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

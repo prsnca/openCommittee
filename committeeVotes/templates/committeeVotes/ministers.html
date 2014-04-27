@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load staticfiles %}
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>
+                    שרי הממשלה
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% for m in ministers %}
+            <div class="minister-big-photo">
+                <a href="{% url 'minister' m.id %}">
+                    <img src="{{ MEDIA_URL }}{{ m.photo }}.jpg">
+                    <h3 style="text-align: center">{{ m.name }}</h3>
+                </a>
+            </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

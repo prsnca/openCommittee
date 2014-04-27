@@ -6,7 +6,7 @@
 
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h2 title="שם ההצעה">
                 {{ bill.name }}
             </h2>
@@ -15,7 +15,7 @@
 
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h3 title="תוכן ההצעה">
                 {{ bill.description }}
             </h3>
@@ -30,7 +30,12 @@
                 {{ voteType.grouper }}
             </h4>
             {% for v in voteType.list %}
-                <a href="{% url 'minister' v.minister.id %}">{{ v.minister }}</a>
+                <div class="minister-photo">
+                <a href="{% url 'minister' v.minister.id %}">
+                    <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                    {{ v.minister }}
+                </a>
+            </div>
             {% endfor %}
         </div>
         {% endfor %}

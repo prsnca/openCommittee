@@ -3,22 +3,33 @@ from django.http import HttpResponse
 from committeeVotes.models import Bill, Minister, Vote
 
 def index(request):
-    bills = Bill.objects.all()
+    bills = Bill.objects.all()[:10]
     ministers = Minister.objects.all()
     context = {'bills': bills,
-               'ministers' : ministers}
+               'ministers': ministers}
     return render(request, 'committeeVotes/index.html', context)
 
 def detail(request, bill_id):
-    bill = get_object_or_404(Bill,pk=bill_id)
+    bill = get_object_or_404(Bill, pk=bill_id)
     votes = Vote.objects.filter(bill=bill)
     context = {'bill': bill,
-               'votes' : votes}
+               'votes': votes}
     return render(request, 'committeeVotes/detail.html', context)
 
 def minister_details(request, minister_id):
     minister = get_object_or_404(Minister,pk=minister_id)
     votes = Vote.objects.filter(minister=minister)
     context = {'minister': minister,
-               'votes' : votes}
+               'votes': votes}
     return render(request, 'committeeVotes/minister_detail.html', context)
+
+def bills(request):
+    bills = Bill.objects.all()
+    context = {'bills': bills}
+    return render(request, 'committeeVotes/bills.html', context)
+
+def ministers(request):
+    ministers = Minister.objects.all()
+    context = {'ministers': ministers}
+    return render(request, 'committeeVotes/ministers.html', context)
+
