@@ -1,72 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-{% load staticfiles %}
+    {% load staticfiles %}
 
-<div class="container">
+    <div class="container">
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>
-                הצעות אחרונות
-            </h3>
-        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    הצעות אחרונות
+                </h3>
 
-        <div class="col-md-6">
-            <h3>
-                שרים
-            </h3>
-        </div>
-    </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-right">
+                            שם ההצעה
+                        </th>
 
-    <div class="row">
-        <div class="col-md-6">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th class="text-right">
-                        שם ההצעה
-                    </th>
+                    </tr>
+                    </thead>
+                    {% for b in bills %}
 
-                </tr>
-                </thead>
-                {% for b in bills %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'detail' b.id %}">
+                                    {{ b.name }}
+                                    <button class="btn btn-info pull-left">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </a>
 
-                <tr>
-                    <td>
-                        <a href="{% url 'detail' b.id %}">
-                            {{b.name}}
-                            <button class="btn btn-info pull-left">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <div class="pull-left">
+                                <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">
+                                    עוד
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </div>
+            <div class="col-md-6">
+                <h3>
+                    שרים
+                </h3>
+                {% for m in ministers %}
+                    <div class="minister-photo">
+                        <a href="{% url 'minister' m.id %}">
+                            <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                            {{ m.name }}
                         </a>
-
-                    </td>
-                </tr>
+                    </div>
                 {% endfor %}
-            <tr>
-                <td>
-                <div class="pull-left">
-                <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">
-עוד
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
             </div>
-                </td>
-            </tr>
 
-            </table>
-
-
-        </div>
-        <div class="col-md-6">
-            {% for m in ministers %}
-            <div class="minister-photo">
-                <a href="{% url 'minister' m.id %}">
-                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                    {{ m.name }}
-                </a>
-            </div>
-            {% endfor %}
-    </div>
-
-    {% endblock %}
+{% endblock %}

@@ -15,24 +15,24 @@
     <link href="{% static 'dist/css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'dist/css/bootstrap-rtl.css' %}" rel="stylesheet">
     <link href="{% static 'site.css' %}" rel="stylesheet">
-    <script src="{% static "jquery-1.10.2.js" %}"></script>
-    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+
 </head>
 <body>
 <!-- Static navbar -->
-<div class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#committee-menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a href="/" class="navbar-brand">ועדת שרים פתוחה </a>
+
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="collapse navbar-collapse" id="committee-menu">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/" class="navbar-brand">ועדת שרים פתוחה </span></a></li>
                 <li>
                     <a href="{%  url 'bills' %}">
                         הצעות החוק
@@ -59,11 +59,13 @@
         </div>
         <!--/.nav-collapse -->
     </div>
-</div>
+</nav>
 {% block content %}
     :)
 {% endblock %}
-
+    <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+    <script src="{% static "js/jquery-1.11.1.min.map" %}"></script>
+    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
 </body>
 
 
