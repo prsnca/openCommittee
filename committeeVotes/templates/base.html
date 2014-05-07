@@ -34,12 +34,12 @@
         <div class="collapse navbar-collapse" id="committee-menu">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{%  url 'bills' %}">
+                    <a href="{% url 'bills' %}">
                         הצעות החוק
                     </a>
                 </li>
                 <li>
-                    <a href="{%  url 'ministers' %}">
+                    <a href="{% url 'ministers' %}">
                         השרים
                     </a>
                 </li>
@@ -60,12 +60,24 @@
         <!--/.nav-collapse -->
     </div>
 </nav>
+
 {% block content %}
     :)
 {% endblock %}
-    <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
-    <script src="{% static "js/jquery-1.11.1.min.map" %}"></script>
-    <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
+<br/>
+<div id="footer">
+    <div class="container">
+        <h4 class="text-muted">
+            <img src="http://www.hasadna.org.il/wp-content/themes/sadna2012/images/sadna-logo.png" alt="הסדנא לידע ציבורי"
+                  width="30" height="30">
+            <span>פרוייקט של</span>  <a href="http://www.hasadna.org.il">הסדנא לידע ציבורי</a>
+        </h4>
+    </div>
+</div>
+
+<script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+<script src="{% static "js/jquery-1.11.1.min.map" %}"></script>
+<script src="{% static "dist/js/bootstrap.min.js" %}"></script>
 </body>
 
 
