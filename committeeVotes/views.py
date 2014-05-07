@@ -1,6 +1,10 @@
+# coding: utf-8
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType
+import json
 
 def index(request):
     bills = Bill.objects.all()[:10]
@@ -8,6 +12,18 @@ def index(request):
     context = {'bills': bills,
                'ministers': ministers}
     return render(request, 'committeeVotes/index.html', context)
+
+def search(request):
+    ministerSearch = [dict([("url", reverse('minister', args=(minister.id,))),
+                            ("name", minister.name),
+                            ("type", "שר"),
+                            ("tokens",[minister.name])]) for minister in Minister.objects.all()]
+    billsSearch = [dict([("url", reverse('detail', args=(bill.id,))),
+                         ("name", bill.name),
+                         ("type", "הצעת חוק"),
+                         ("tokens",[bill.name])]) for bill in Bill.objects.all()]
+    searchResults = ministerSearch + billsSearch
+    return HttpResponse(json.dumps(searchResults), content_type="application/json")
 
 def detail(request, bill_id):
     bill = get_object_or_404(Bill, pk=bill_id)
