@@ -23,25 +23,38 @@
     </div>
 
     <div class="row">
-        {% regroup votes by vote.typeName as votes_vote %}
-        {% for voteType in votes_vote %}
-        <div class="col-md-3 voteType">
-            <h4>
-                {{ voteType.grouper }}
-            </h4>
-            {% for v in voteType.list %}
-                <div class="minister-photo">
-                <a href="{% url 'minister' v.minister.id %}">
-                    <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
-                    {{ v.minister }}
-                </a>
+        {% for vote_type, votes in votes_by_type %}
+            <div class="col-md-4 voteType">
+                <h4>
+                    {{ vote_type }}
+                </h4>
+                {% for v in votes %}
+                    <div class="minister-photo">
+                        <a href="{% url 'minister' v.minister.id %}">
+                            <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                            {{ v.minister }}
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
         {% endfor %}
     </div>
 
-
+    <div class="row">
+        <div class="col-md-12 voteType">
+            <h4>
+                אינם חושפים את הצבעתם
+            </h4>
+            {% for m in unknown_ministers %}
+                <div class="minister-photo">
+                    <a href="{% url 'minister' m.id %}">
+                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                        {{ m }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 
 </div>

@@ -30,6 +30,9 @@ class Vote(models.Model):
     bill = models.ForeignKey(Bill)
     minister = models.ForeignKey(Minister)
 
+    class Meta:
+        unique_together = ("bill","minister")
+
     def __unicode__(self):
         return self.minister.name + " voted " + self.vote.typeName
 
