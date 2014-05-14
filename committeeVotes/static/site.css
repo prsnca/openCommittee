@@ -5,12 +5,16 @@
 html {
   position: relative;
   min-height: 100%;
+
 }
 body {
   /* Margin bottom by footer height */
   margin-bottom: 70px;
-  font-family: Alef, Arial;
+  font-family: 'Alef', Arial;
+}
 
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Alef', Arial ;
 }
 
 #search {
