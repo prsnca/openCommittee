@@ -1,63 +1,73 @@
 {% extends "base.html" %}
 {% block content %}
-{% load staticfiles %}
+    {% load staticfiles %}
 
-<div class="container">
+    <div class="container">
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <h2 title="שם ההצעה">
-                {{ bill.name }}
-            </h2>
+        <div class="row">
+            <div class="col-md-8">
+                <h2 title="שם ההצעה">
+                    {{ bill.name }}
+                </h2>
+            </div>
+            <div class="col-md-4">
+                {% if bill.oknesset_url %}
+                    <a href="{{ bill.oknesset_url }}">
+                        <h3 class="pull-left" title="שם ההצעה">
+
+                            ההצעה באתר כנסת פתוחה
+                        </h3>
+                    </a>
+                {% endif %}
+            </div>
         </div>
-    </div>
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3 title="תוכן ההצעה">
-                {{ bill.description }}
-            </h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well" title="תוכן ההצעה">
+                    {{ bill.description }}
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        {% for vote_type, votes in votes_by_type %}
-            <div class="col-md-4 voteType">
+        <div class="row">
+            {% for vote_type, votes in votes_by_type %}
+                <div class="col-md-4 voteType">
+                    <h4>
+                        {{ vote_type }}
+                    </h4>
+                    {% for v in votes %}
+                        <div class="minister-photo">
+                            <a href="{% url 'minister' v.minister.id %}">
+                                <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                                {{ v.minister }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 voteType">
                 <h4>
-                    {{ vote_type }}
+                    אינם חושפים את הצבעתם
                 </h4>
-                {% for v in votes %}
+                {% for m in unknown_ministers %}
                     <div class="minister-photo">
-                        <a href="{% url 'minister' v.minister.id %}">
-                            <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
-                            {{ v.minister }}
+                        <a href="{% url 'minister' m.id %}">
+                            <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                            {{ m }}
                         </a>
                     </div>
                 {% endfor %}
             </div>
-        {% endfor %}
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 voteType">
-            <h4>
-                אינם חושפים את הצבעתם
-            </h4>
-            {% for m in unknown_ministers %}
-                <div class="minister-photo">
-                    <a href="{% url 'minister' m.id %}">
-                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                        {{ m }}
-                    </a>
-                </div>
-            {% endfor %}
         </div>
+
+
     </div>
-
-
-</div>
 
 
 {% endblock %}
