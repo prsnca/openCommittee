@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
-from committeeVotes.models import Bill, Minister, Vote, VoteType
+from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
 import json
 
 def index(request):
@@ -68,4 +68,16 @@ def ministers(request):
     ministers = Minister.objects.all()
     context = {'ministers': ministers}
     return render(request, 'committeeVotes/ministers.html', context)
+
+def meetings(request):
+    meetings = Meeting.objects.all()
+    context = {'meetings': meetings}
+    return render(request, 'committeeVotes/meetings.html', context)
+
+def meeting_details(request, meeting_id):
+    meeting = get_object_or_404(Meeting,pk=meeting_id)
+    bills = meeting.proposed_bills.all()
+    context = {'meeting': meeting,
+               'bills': bills}
+    return render(request, 'committeeVotes/meeting_detail.html', context)
 

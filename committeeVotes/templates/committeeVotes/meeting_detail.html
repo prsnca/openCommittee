@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+               ישיבת הועדה שנערכה בתאריך {{ meeting.took_place }}
+            </h2>
+
+            <h3>
+הצעות החוק שעלו בישיבה
+            </h3>
+
+
+            <table class="table table-hover">
+                <thead>
+                <th>
+                    שם ההצעה
+                </th>
+                </thead>
+                {% for b in bills %}
+                <tr>
+                    <td><a href="{% url 'detail' b.id %}">{{b}}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

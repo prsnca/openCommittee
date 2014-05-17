@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load staticfiles %}
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>
+                    ישיבות הועדה
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-right">
+                            תאריך הישיבה
+                        </th>
+                        <th class="text-right">
+                            מספר ההצעות שנידונו
+                        </th>
+
+                    </tr>
+                    </thead>
+                    {% for m in meetings %}
+
+                        <tr>
+                            <td><a href="{% url 'meeting' m.id %}">{{ m.took_place | date }}</a></td>
+                            <td>{{ m.proposed_bills.count }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

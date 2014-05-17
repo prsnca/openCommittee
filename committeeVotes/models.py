@@ -4,6 +4,7 @@ from django.db import models
 class Bill(models.Model):
     name = models.CharField(max_length=500)
     description = models.TextField()
+    #oknesset_url = models.CharField(max_length=100, blank=True, null=True)
     def __unicode__(self):
         return self.name
 
