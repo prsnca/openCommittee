@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .minister-photo {
     position: relative;
     height: 120px;
-    width: 90px;
+    width: 95px;
     display: inline-block;
     margin: 9px;
 }
@@ -125,4 +125,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .twitter-typeahead .tt-suggestion.tt-cursor {
   color: #03739c;
+}
+
+.dataset-name {
+  margin: 0 20px 5px 20px;
+  padding: 3px 0;
+  border-bottom: 1px solid #ccc;
 }

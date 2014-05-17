@@ -50,7 +50,7 @@
                     <form class="navbar-form" role="search">
 
                         <div id="search" class="form-group">
-                            <input type="text" class="typeahead"
+                            <input type="text" class="typeahead" data-provide="oksearch"
                                    placeholder="חפש שרים או הצעות חוק"
                                    style="width:300px;"
                                     dir="rtl">
@@ -94,52 +94,9 @@
 
 <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
 <script src="{% static "js/jquery-1.11.1.min.map" %}"></script>
-<script src="{% static "js/typeahead/typeahead.bundle.js" %}"></script>
-<script src="{% static "js/handlebars.js" %}"></script>
 <script src="{% static "dist/js/bootstrap.min.js" %}"></script>
-<script>
-    {% verbatim %}
-    $(document).ready(function () {
-        var search_data;
+<script src="{% static "js/search.js" %}"></script>
 
-        search_data = new Bloodhound({
-            datumTokenizer: function (d) {
-                console.log("d:", d);
-                console.log("tokens", d.tokens);
-                return d.tokens;
-            },
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: '../../search.json'
-        });
-
-        search_data.initialize();
-
-        $('#search .typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        }, {
-            name: 'search_data',
-            source: search_data.ttAdapter(),
-            templates: {
-                suggestion: Handlebars.compile([
-                    '<div class="search-option">',
-                    '	<span style="text-align: right;">',
-                    '		<span class="search-type">{{type}}</span>',
-                    '		<span class="search-name">{{name}}</span>',
-                    '	</span>',
-                    '</div>'
-                ].join(''))
-            }
-        });
-
-        $('#search').on('typeahead:selected', function (object, datum) {
-            window.location.replace(datum.url);
-        });
-    });
-
-    {% endverbatim %}
-</script>
 
 
 </html>

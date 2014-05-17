@@ -18,4 +18,6 @@ urlpatterns = patterns('',
     url(r'^minister/$', views.ministers, name='ministers'),
     url(r'^bills/$', views.bills, name='bills'),
     url(r'^search.json', views.search, name='search'),
+    url(r'^bills.json', views.searchBills, name='searchBills'),
+    url(r'^ministers.json', views.searchMinisters, name='searchMinisters'),
 )

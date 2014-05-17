@@ -25,6 +25,17 @@ def search(request):
     searchResults = ministerSearch + billsSearch
     return HttpResponse(json.dumps(searchResults), content_type="application/json")
 
+
+def searchBills(request):
+    billsSearch = {'objects': [dict([("url", reverse('detail', args=(bill.id,))),
+                         ("name",bill.name)]) for bill in Bill.objects.all()]}
+    return HttpResponse(json.dumps(billsSearch), content_type="application/json")
+
+def searchMinisters(request):
+    ministerSearch = {'objects': [dict([("url", reverse('minister', args=(minister.id,))),
+                            ("name",minister.name)]) for minister in Minister.objects.all()]}
+    return HttpResponse(json.dumps(ministerSearch), content_type="application/json")
+
 def detail(request, bill_id):
     bill = get_object_or_404(Bill, pk=bill_id)
     votes = Vote.objects.select_related('minister').filter(bill=bill)
