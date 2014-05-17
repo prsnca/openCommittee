@@ -4,7 +4,7 @@ from django.db import models
 class Bill(models.Model):
     name = models.CharField(max_length=500)
     description = models.TextField()
-    #oknesset_url = models.CharField(max_length=100, blank=True, null=True)
+    oknesset_url = models.CharField(max_length=100, blank=True, null=True)
     def __unicode__(self):
         return self.name
 
@@ -14,7 +14,7 @@ class VoteType(models.Model):
         return self.typeName
 
 class Meeting(models.Model):
-    took_place = models.DateField()
+    took_place = models.DateField(unique=True)
     proposed_bills = models.ManyToManyField(Bill, blank=True)
     def __unicode__(self):
         return "Meeting #" + str(self.id) + u" - %s" % self.took_place

@@ -13,10 +13,10 @@ from django.db import connection
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "committeeVotes.settings") # Replace with your app name.
 
-BILL_FIELDS = ['name','description']
+BILL_FIELDS = ['name','description', 'oknesset_url']
 
 
-# 
+#
 # #Importing bills CSV
 class Command(BaseCommand):
     def handle(self, *args, **options):

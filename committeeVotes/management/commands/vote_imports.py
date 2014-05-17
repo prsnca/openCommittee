@@ -15,11 +15,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "committeeVotes.settings") # Rep
 
 def get_meeting(date):
     try:
-        meeting = Meeting.objects.get(took_place=date)
-    except ObjectDoesNotExist:
-        print "Meeting was not found!"
+        meeting = Meeting.objects.get_or_create(took_place=date)
+        print "got meeting!"
+    except MultipleObjectsReturned:
+        print "Few meetings were found!"
         return None
-    return meeting
+    return meeting[0]
 
 def get_bill(name):
     try:
@@ -86,6 +87,11 @@ class Command(BaseCommand):
                     vote.full_clean()
                 except ValidationError:
                     print "error in vote"
+                    continue
+                try:
+                    vote.meeting.proposed_bills.add(vote.bill)
+                except:
+                    print "error in adding bill to meeting"
                     continue
 
                 vote.save()
