@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
 import json
 
+
 def index(request):
     bills = Bill.objects.all()[:10]
     ministers = Minister.objects.all()

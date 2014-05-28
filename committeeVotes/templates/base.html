@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load url from future %}
+{% load custom_tags %}
 <!DOCTYPE HTML>
 <html dir="rtl">
 <head>
@@ -34,17 +35,17 @@
         </div>
         <div class="collapse navbar-collapse" id="committee-menu">
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <li class="{% active_page request "bills" %}">
                     <a href="{% url 'bills' %}">
                         הצעות החוק
                     </a>
                 </li>
-                <li>
+                <li class="{% active_page request "ministers" %}">
                     <a href="{% url 'ministers' %}">
                         השרים
                     </a>
                 </li>
-                                <li>
+                <li class="{% active_page request "meetings" %}">
                     <a href="{% url 'meetings' %}">
 ישיבות הועדה
                     </a>

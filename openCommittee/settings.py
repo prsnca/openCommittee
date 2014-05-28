@@ -48,6 +48,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.contrib.auth.context_processors.auth',
+  'django.core.context_processors.request',
+  'django.core.context_processors.media',
+)
+
 ROOT_URLCONF = 'openCommittee.urls'
 
 WSGI_APPLICATION = 'openCommittee.wsgi.application'
@@ -107,3 +113,8 @@ if os.environ.get('DATABASE_URL'): # Heroku
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, '..', 'committeeVotes/static'),
     )
+
+try:
+    from local_settings import *
+except:
+    pass

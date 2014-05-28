@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from committeeVotes import views
 
 from django.contrib import admin
@@ -25,4 +27,4 @@ urlpatterns = patterns('',
     url(r'^search.json', views.search, name='search'),
     url(r'^bills.json', views.searchBills, name='searchBills'),
     url(r'^ministers.json', views.searchMinisters, name='searchMinisters'),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
