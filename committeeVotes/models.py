@@ -29,7 +29,7 @@ class Vote(models.Model):
     vote = models.ForeignKey(VoteType)
     meeting = models.ForeignKey(Meeting)
     bill = models.ForeignKey(Bill)
-    minister = models.ForeignKey(Minister)
+    minister = models.ForeignKey(Minister, related_name="votes")
 
     class Meta:
         unique_together = ("bill","minister")

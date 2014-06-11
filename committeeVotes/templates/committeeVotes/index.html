@@ -64,9 +64,12 @@
                     שרים
                 </h3>
                 {% for m in ministers %}
-                    <div class="minister-photo">
+                    <div class="minister-photo" {% if m.votes.count == 0 %}
+                                    style="opacity:0.3"
+                                    {% endif %}>
                         <a href="{% url 'minister' m.id %}">
-                            <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                            <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg"
+                                    >
                             {{ m.name }}
                         </a>
                     </div>
