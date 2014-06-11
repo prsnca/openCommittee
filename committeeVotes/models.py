@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 class Bill(models.Model):
     name = models.CharField(max_length=500)
-    description = models.TextField()
     oknesset_url = models.CharField(max_length=100, blank=True, null=True)
+    passed = models.NullBooleanField()
     def __unicode__(self):
         return self.name
 

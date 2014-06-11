@@ -22,15 +22,25 @@
                 {% endif %}
             </div>
         </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="well" title="תוכן ההצעה">
-                    {{ bill.description }}
-                </div>
+{% if not bill.passed == None %}
+    <div class="row">
+            <div class="col-md-8">
+                <h2 title="החלטת הועדה">
+החלטת הועדה:
+                    {% if bill.passed %}
+                    <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
+                        בעד
+                    </span>
+                    {% endif %}
+                {% if not bill.passed %}
+                    <span class="badge" style="background-color:red; vertical-align:middle; font-size:24px;">
+נגד
+                    </span>
+                    {% endif %}
+                </h2>
             </div>
         </div>
+    {% endif %}
 
         <div class="row">
             {% for vote_type, votes in votes_by_type %}

@@ -13,7 +13,19 @@ from django.db import connection
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "committeeVotes.settings") # Replace with your app name.
 
-BILL_FIELDS = ['name','description', 'oknesset_url']
+def vote_to_bool(vote):
+    if not vote or vote == '':
+        return None
+    if vote == 'בעד':
+        return True
+    elif vote == 'נגד':
+        return False
+
+BILL_FIELDS = [
+    ('name', None),
+    ('oknesset_url', None),
+    ('passed', vote_to_bool)
+]
 
 
 #
@@ -37,8 +49,10 @@ class Command(BaseCommand):
 
             for d in r:
                 bill = Bill()
-                for header in BILL_FIELDS:
+                for header, conv_func in BILL_FIELDS:
                     value = d[header]
+                    if conv_func:
+                        value = conv_func(value)
                     setattr(bill, header, value)
                 try:
                     bill.full_clean()
