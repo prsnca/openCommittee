@@ -27,7 +27,7 @@
                 </thead>
                 {% for v in votes %}
                 <tr>
-                    <td><a href="{% url 'detail' v.bill.id %}">{{v.bill}}</a></td>
+                    <td><a href="{% url 'bill' v.bill.id %}">{{v.bill}}</a></td>
                     <td>{{v.vote}}</td>
                 </tr>
                 {% endfor %}

@@ -37,7 +37,7 @@ def searchMinisters(request):
                             ("name",minister.name)]) for minister in Minister.objects.all()]}
     return HttpResponse(json.dumps(ministerSearch), content_type="application/json")
 
-def detail(request, bill_id):
+def bill(request, bill_id):
     bill = get_object_or_404(Bill, pk=bill_id)
     votes = Vote.objects.select_related('minister').filter(bill=bill)
     vote_types = VoteType.objects.all().order_by('id')
@@ -51,7 +51,7 @@ def detail(request, bill_id):
     context = {'bill': bill,
                'votes_by_type': sorted(votes_by_type.iteritems()),
                'unknown_ministers': non_voting_ministers}
-    return render(request, 'committeeVotes/detail.html', context)
+    return render(request, 'committeeVotes/bill.html', context)
 
 def minister_details(request, minister_id):
     minister = get_object_or_404(Minister,pk=minister_id)

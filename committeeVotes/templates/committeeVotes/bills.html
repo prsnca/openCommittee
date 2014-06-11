@@ -25,7 +25,7 @@
                     {% for b in bills %}
 
                         <tr>
-                            <td><a href="{% url 'detail' b.id %}">{{ b.name }}</a></td>
+                            <td><a href="{% url 'bill' b.id %}">{{ b.name }}</a></td>
                         </tr>
                     {% endfor %}
                 </table>
