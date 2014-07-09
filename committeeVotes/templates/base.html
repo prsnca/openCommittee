@@ -65,8 +65,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <a href="#">
+                <li class="{% active_page request "about" %}">
+                    <a href="{% url 'about' %}">
                         אודות
                     </a>
                 </li>

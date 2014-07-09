@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     url(r'meetings/$',views.meetings, name='meetings'),
     url(r'^meetings/(?P<meeting_id>\d+)/$', views.meeting_details, name='meeting'),
 
+    url(r'about/$',views.about, name='about'),
+
     url(r'^search.json', views.search, name='search'),
     url(r'^bills.json', views.searchBills, name='searchBills'),
     url(r'^ministers.json', views.searchMinisters, name='searchMinisters'),

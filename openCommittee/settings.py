@@ -110,6 +110,8 @@ if os.environ.get('DATABASE_URL'): # Heroku
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
 
+    DEBUG = False
+
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, '..', 'committeeVotes/static'),
     )

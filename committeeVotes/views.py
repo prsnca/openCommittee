@@ -75,6 +75,9 @@ def meetings(request):
     context = {'meetings': meetings}
     return render(request, 'committeeVotes/meetings.html', context)
 
+def about(request):
+    return render(request, 'committeeVotes/about.html')
+
 def meeting_details(request, meeting_id):
     meeting = get_object_or_404(Meeting,pk=meeting_id)
     bills = meeting.proposed_bills.all()
