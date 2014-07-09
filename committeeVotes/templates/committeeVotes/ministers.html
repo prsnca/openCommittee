@@ -14,9 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% for m in ministers %}
-            <div class="minister-big-photo" {% if m.votes.count == 0 %}
-                                    style="opacity:0.3"
-                                    {% endif %}>
+            <div class="minister-big-photo {% if m.votes.count == 0 %} disabled {% endif %}">
                 <a href="{% url 'minister' m.id %}">
                     <img src="{{ MEDIA_URL }}{{ m.photo }}.jpg">
                     <h3 style="text-align: center">{{ m.name }}</h3>

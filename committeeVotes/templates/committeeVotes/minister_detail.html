@@ -10,7 +10,11 @@
             <h2>
                 {{ minister.name }}
             </h2>
-
+{% if minister.votes.count == 0 %}
+    <h3>
+                                שר זה אינו חושף את הצבעותיו!
+    </h3>
+{% else %}
             <h3>
                 הצבעות
             </h3>
@@ -32,6 +36,7 @@
                 </tr>
                 {% endfor %}
             </table>
+{% endif %}
         </div>
     <div class="col-md-4">
         <div class="pull-left">
