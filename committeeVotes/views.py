@@ -28,7 +28,7 @@ def search(request):
 
 
 def searchBills(request):
-    billsSearch = {'objects': [dict([("url", reverse('detail', args=(bill.id,))),
+    billsSearch = {'objects': [dict([("url", reverse('bill', args=(bill.id,))),
                          ("name",bill.name)]) for bill in Bill.objects.all()]}
     return HttpResponse(json.dumps(billsSearch), content_type="application/json")
 
