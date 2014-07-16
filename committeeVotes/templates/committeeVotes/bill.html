@@ -7,40 +7,34 @@
 
         <div class="row">
             <div class="col-md-8">
-                <h2 title="שם ההצעה">
-                    {{ bill.name }}
-                </h2>
+                <a {% if bill.oknesset_url %}
+                    target="_blank" href="{{ bill.oknesset_url }}"
+                {% else %}
+                    href="#"
+                {% endif %}>
+                    <h2 title="שם ההצעה">
+                        {{ bill.name }}
+                    </h2>
+                </a>
             </div>
-            <div class="col-md-4">
-                {% if bill.oknesset_url %}
-                    <a href="{{ bill.oknesset_url }}">
-                        <h3 class="pull-left" title="שם ההצעה">
+            {% if not bill.passed == None %}
+                <div class="col-md-4">
+                    <h2 class="pull-left" title="החלטת הועדה">
+                        {% if bill.passed %}
+                            <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
+                        עבר בועדה
+                    </span>
+                        {% endif %}
+                        {% if not bill.passed %}
+                            <span class="badge" style="background-color:red; vertical-align:middle; font-size:24px;">
+נפל בועדה
+                    </span>
+                        {% endif %}
+                    </h2>
+                </div>
+            {% endif %}
 
-                            ההצעה באתר כנסת פתוחה
-                        </h3>
-                    </a>
-                {% endif %}
-            </div>
         </div>
-{% if not bill.passed == None %}
-    <div class="row">
-            <div class="col-md-8">
-                <h2 title="החלטת הועדה">
-החלטת הועדה:
-                    {% if bill.passed %}
-                    <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
-                        בעד
-                    </span>
-                    {% endif %}
-                {% if not bill.passed %}
-                    <span class="badge" style="background-color:red; vertical-align:middle; font-size:24px;">
-נגד
-                    </span>
-                    {% endif %}
-                </h2>
-            </div>
-        </div>
-    {% endif %}
 
         <div class="row">
             {% for vote_type, votes in votes_by_type %}
