@@ -555,6 +555,10 @@ ul, ol, table {
     bottom: 40px
 }
 
+.decision {
+    margin-top: 10px;
+}
+
 .good {
     fill: #3ac8a8
 }

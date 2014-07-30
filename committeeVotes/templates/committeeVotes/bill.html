@@ -6,19 +6,19 @@
 
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <a {% if bill.oknesset_url %}
                     target="_blank" href="{{ bill.oknesset_url }}"
                 {% else %}
                     href="#"
                 {% endif %}>
-                    <h2 title="שם ההצעה">
+                    <h1 title="שם ההצעה">
                         {{ bill.name }}
-                    </h2>
+                    </h1>
                 </a>
             </div>
             {% if not bill.passed == None %}
-                <div class="col-md-4">
+                <div class="col-md-2 decision">
                     <h2 class="pull-left" title="החלטת הועדה">
                         {% if bill.passed %}
                             <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
