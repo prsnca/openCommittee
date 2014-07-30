@@ -36,6 +36,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin: 20px 0;
 }
 
+.ministers {
+    margin-bottom: 35px
+}
+
+.ministers > div {
+    margin: 9px
+}
+
 .minister-photo {
     position: relative;
     height: 120px;
@@ -66,7 +74,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     height: 450px;
     width: 300px;
     display: inline-block;
-    margin: 15px;
+    margin: 25px !important;
 }
 
 #footer {
@@ -111,7 +119,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     background-color: #fff;
 }
 
-
 h1 {
     font-size: 42px;
     letter-spacing: 1px
@@ -132,8 +139,13 @@ h4 {
     letter-spacing: 1px
 }
 
-ul, ol {
+ul, ol, table {
     margin: 0px 25px 10px 0px
+}
+
+.card table {
+    width: 95%;
+    max-width: 95%
 }
 
 .card {

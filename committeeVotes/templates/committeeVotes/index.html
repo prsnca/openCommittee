@@ -3,88 +3,111 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    רקע
-                </h3>
-
-                <div class="well">
-                    וועדת שרים לענייני חקיקה היא המקום בו הממשלה מחליטה האם היא תומכת או מתנגדת להצעות חוק. כל הצעות
-                    החוק עוברות דרך הוועדה, וללא תמיכת הממשלה אין להצעת החוק כמעט שום סיכוי לעבור בכנסת. הוועדה מתנהלת
-                    בחוסר שקיפות חריג, כך שכל המידע באתר נמסר מרצונם החופשי של שרים החברים בוועדה ותומכים בשקיפות.
-                </div>
+            <div class="cards col-md-12">
+                <section class="card card-list card-list-latest compact">
+                    <header>
+                        <h2>
+                            רקע
+                        </h2>
+                    </header>
+                    <ul>
+                        <li>
+                            וועדת שרים לענייני חקיקה היא המקום בו הממשלה מחליטה האם היא תומכת או מתנגדת להצעות חוק. כל
+                            הצעות
+                            החוק עוברות דרך הוועדה, וללא תמיכת הממשלה אין להצעת החוק כמעט שום סיכוי לעבור בכנסת. הוועדה
+                            מתנהלת
+                            בחוסר שקיפות חריג, כך שכל המידע באתר נמסר מרצונם החופשי של שרים החברים בוועדה ותומכים
+                            בשקיפות.
+                        </li>
+                    </ul>
+                </section>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <h3>
-                    הצעות אחרונות
-                </h3>
+            <div class="cards col-md-6">
+                <section class="card card-list card-list-latest compact">
+                    <header>
+                        <h2>
+                            הצעות אחרונות
+                        </h2>
+                    </header>
 
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th class="text-right">
-                            שם ההצעה
-                        </th>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-right">
+                                שם ההצעה
+                            </th>
 
-                    </tr>
-                    </thead>
-                    {% for b in bills %}
+                        </tr>
+                        </thead>
+                        {% for b in bills %}
 
+                            <tr>
+                                <td>
+                                    <a href="{% url 'bill' b.id %}">
+                                        {{ b.name }}
+                                        <button class="btn btn-info pull-left">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        {% endfor %}
                         <tr>
                             <td>
-                                <a href="{% url 'bill' b.id %}">
-                                    {{ b.name }}
-                                    <button class="btn btn-info pull-left">
+                                <div class="pull-left">
+                                    <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">
+                                        עוד
                                         <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </a>
-
+                                    </a>
+                                </div>
                             </td>
                         </tr>
-                    {% endfor %}
-                    <tr>
-                        <td>
-                            <div class="pull-left">
-                                <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">
-                                    עוד
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
 
-                </table>
+                    </table>
+                </section>
 
 
             </div>
-            <div class="col-md-6">
-                <h3>
-                    שרים
-                </h3>
-                {% for m in ministers %}
-                    {% if m.votes.count == 0 %}
-                        <div class="minister-photo disabled">
+            <div class="cards col-md-6">
+                <section class="card card-list card-list-latest compact">
+                    <header>
+                        <h2>
+                            שרים
+                        </h2>
+                    </header>
+                <ul>
+                    <li>
 
-                        <a href="#notCoop" data-toggle="modal">
-                    {% else %}
-                        <div class="minister-photo">
+                    <div class="ministers">
+                    {% for m in ministers %}
+                        {% if m.votes.count == 0 %}
+                            <div class="minister-photo disabled">
 
-                        <a href="{% url 'minister' m.id %}">
-                    {% endif %}
-                <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                {{ m.name }}
-                </a>
-                </div>
+                            <a href="#notCoop" data-toggle="modal">
+                        {% else %}
+                            <div class="minister-photo">
+
+                            <a href="{% url 'minister' m.id %}">
+                        {% endif %}
+                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                    {{ m.name }}
+                    </a>
+                    </div>
 
 
 
-                {% endfor %}
-                </div>
+                    {% endfor %}
+                        </div>
+                        </li>
+                </ul>
+                </section>
             </div>
         </div>
+    </div>
     </div>
     <div class="modal fade" id="notCoop" tabindex="-1" role="dialog" aria-labelledby="notCoopLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -92,10 +115,10 @@
                 <div class="modal-body">
                     <p>
                         שר זה אינו חושף את הצבעותיו!
-                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
-                    סגור
-                </button>
-                                    </p>
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
+                            סגור
+                        </button>
+                    </p>
 
                 </div>
 
