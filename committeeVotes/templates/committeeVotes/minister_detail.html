@@ -7,13 +7,13 @@
 
         <div class="row">
             <div class="cards col-md-8">
-                <h1>
+                <h2>
                     {{ minister.name }}
-                </h1>
+                </h2>
                 {% if minister.votes.count == 0 %}
-                    <h2>
+                    <h3>
                         שר זה אינו חושף את הצבעותיו!
-                    </h2>
+                    </h3>
                 {% else %}
                     <section class="card card-list card-list-latest compact">
                     <header>
