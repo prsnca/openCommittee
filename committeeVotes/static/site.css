@@ -125,6 +125,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     letter-spacing: 1px
 }
 
+.card-list.compact h3 {
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin-right: 25px;
+}
+
 ul, ol, table {
     margin: 0px 25px 10px 0px
 }
