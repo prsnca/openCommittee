@@ -551,6 +551,26 @@ ul, ol, table {
     margin-top: 10px;
 }
 
+.minister-vote {
+    text-align: center;
+    background-clip: content-box;
+    font-weight: bold;
+}
+
+.yay {
+    background-color: #3ac8a8 !important;
+}
+
+.nay {
+    background-color: #ec6752 !important;
+}
+
+.abstain {
+    background-color: #87ceeb !important;
+}
+
+
+
 .good {
     fill: #3ac8a8
 }
@@ -602,3 +622,4 @@ ul, ol, table {
 .social-links ul li a:hover, .party-member-info-links ul li a:hover {
     opacity: 1
 }
+
