@@ -9,24 +9,32 @@
         <div class="row">
             <div class="cards col-md-8">
                 <div class="pull-left">
-                    <a class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-twitter fa-inverse fa-stack-1x"></i>
-                    </a>
-                    <a class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-facebook fa-inverse fa-stack-1x"></i>
-                    </a>
-                    <a class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-envelope fa-inverse fa-stack-1x"></i>
-                    </a>
-                    <a class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-phone fa-inverse fa-stack-1x"></i>
-                    </a>
+                    {% if minister.twitter %}
+                        <a href="{{ minister.twitter }}" target="_blank" class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-inverse fa-stack-1x"></i>
+                        </a>
+                    {% endif %}
+                    {% if minister.facebook %}
+                        <a href="{{ minister.facebook }}" target="_blank" class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-facebook fa-inverse fa-stack-1x"></i>
+                        </a>
+                    {% endif %}
+                    {% if minister.mail %}
+                        <a href="mailto:{{ minister.mail }}" class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-envelope fa-inverse fa-stack-1x"></i>
+                        </a>
+                    {% endif %}
+                    {% if minister.phone %}
+                        <a class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-phone fa-inverse fa-stack-1x"></i>
+                        </a>
+                    {% endif %}
                 </div>
-             <h2 class="minister-title">
+                <h2 class="minister-title">
                     {{ minister.name }}
 
 

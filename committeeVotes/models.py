@@ -22,6 +22,10 @@ class Meeting(models.Model):
 class Minister(models.Model):
     name = models.CharField(max_length=30)
     photo = models.CharField(max_length=100)
+    mail = models.EmailField(null=True, blank=True)
+    facebook = models.CharField(max_length=100, null=True, blank=True)
+    twitter = models.CharField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
     def __unicode__(self):
         return self.name
 
