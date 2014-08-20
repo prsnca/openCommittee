@@ -623,3 +623,11 @@ ul, ol, table {
     opacity: 1
 }
 
+.minister-title {
+    margin-top: 5px;
+}
+
+.fa-stack {
+    cursor: pointer;
+}
+
