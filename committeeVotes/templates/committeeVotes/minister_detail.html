@@ -40,36 +40,43 @@
 
                 </h2>
 
-                {% if minister.votes.count == 0 %}
+                {% if not minister.coop %}
                     <h3>
                         שר זה אינו חושף את הצבעותיו!
                     </h3>
                 {% else %}
-                    <section class="card card-list card-list-latest compact">
-                        <header>
-                            <h2>
-                                הצבעות
-                            </h2>
-                        </header>
+                    {% if votes %}
+                        <section class="card card-list card-list-latest compact">
+                            <header>
+                                <h2>
+                                    הצבעות
+                                </h2>
+                            </header>
 
 
-                        <table class="table table-hover">
-                            <thead>
-                            <th>
-                                שם ההצעה
-                            </th>
-                            <th>
-                                הצביע
-                            </th>
-                            </thead>
-                            {% for v in votes %}
-                                <tr>
-                                    <td><a href="{% url 'bill' v.bill.id %}">{{ v.bill }}</a></td>
-                                    <td class="minister-vote {{ v.vote | vote_style }}">{{ v.vote }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </section>
+                            <table class="table table-hover">
+                                <thead>
+                                <th>
+                                    שם ההצעה
+                                </th>
+                                <th>
+                                    הצביע
+                                </th>
+                                </thead>
+                                {% for v in votes %}
+                                    <tr>
+                                        <td><a href="{% url 'bill' v.bill.id %}">{{ v.bill }}</a></td>
+                                        <td class="minister-vote {{ v.vote | vote_style }}">{{ v.vote }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                            </table>
+                        </section>
+                    {% else %}
+                        <h3>
+                                    אין הצבעות
+                        </h3>
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="col-md-4">

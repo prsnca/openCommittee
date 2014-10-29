@@ -84,7 +84,7 @@
 
                     <div class="ministers">
                     {% for m in ministers %}
-                        {% if m.votes.count == 0 %}
+                        {% if not m.coop %}
                             <div class="minister-photo disabled">
 
                             <a href="#notCoop" data-toggle="modal">
@@ -102,7 +102,7 @@
 
                     {% endfor %}
                         </div>
-                        </li>
+                    </li>
                 </ul>
                 </section>
             </div>

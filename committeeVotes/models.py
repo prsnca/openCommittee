@@ -26,6 +26,7 @@ class Minister(models.Model):
     facebook = models.CharField(max_length=100, null=True, blank=True)
     twitter = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
+    coop = models.NullBooleanField(blank=True)
     def __unicode__(self):
         return self.name
 
