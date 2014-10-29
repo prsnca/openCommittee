@@ -48,10 +48,15 @@
                             </a>
                         </div>
                     {% endfor %}
+                    {% if not votes %}
+                        <div class="no-votes">
+                        אין הצבעות
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
-
+<hr/>
         <div class="row">
             <div class="col-md-12 voteType">
                 <h4>
