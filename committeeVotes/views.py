@@ -8,7 +8,7 @@ import json
 
 
 def index(request):
-    bills = Bill.objects.all()[:10]
+    bills = Bill.objects.all().order_by('-id')[:10]
     ministers = Minister.objects.all()
     context = {'bills': bills,
                'ministers': ministers}
@@ -61,7 +61,7 @@ def minister_details(request, minister_id):
     return render(request, 'committeeVotes/minister_detail.html', context)
 
 def bills(request):
-    bills = Bill.objects.all()
+    bills = Bill.objects.all().order_by('-id')
     context = {'bills': bills}
     return render(request, 'committeeVotes/bills.html', context)
 
@@ -71,7 +71,7 @@ def ministers(request):
     return render(request, 'committeeVotes/ministers.html', context)
 
 def meetings(request):
-    meetings = Meeting.objects.all()
+    meetings = Meeting.objects.all().order_by('-id')
     context = {'meetings': meetings}
     return render(request, 'committeeVotes/meetings.html', context)
 
