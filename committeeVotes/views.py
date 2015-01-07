@@ -55,7 +55,7 @@ def bill(request, bill_id):
 
 def minister_details(request, minister_id):
     minister = get_object_or_404(Minister,pk=minister_id)
-    votes = Vote.objects.filter(minister=minister)
+    votes = Vote.objects.filter(minister=minister).order_by('-id')
     context = {'minister': minister,
                'votes': votes}
     return render(request, 'committeeVotes/minister_detail.html', context)
