@@ -33,12 +33,21 @@
                             <i class="fa fa-phone fa-inverse fa-stack-1x"></i>
                         </a>
                     {% endif %}
+                    {% if minister.oknesset %}
+                        <a href="{{ minister.oknesset }}" target="_blank" class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-institution fa-inverse fa-stack-1x"></i>
+                        </a>
+                    {% endif %}
                 </div>
                 <h2 class="minister-title">
                     {{ minister.name }}
-
-
                 </h2>
+                {% if minister.title %}
+                <h3>
+                    {{ minister.title }}
+                </h3>
+                {% endif %}
 
                 {% if not minister.coop %}
                     <h3>

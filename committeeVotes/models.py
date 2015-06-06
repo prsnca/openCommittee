@@ -21,11 +21,13 @@ class Meeting(models.Model):
 
 class Minister(models.Model):
     name = models.CharField(max_length=30)
+    title = models.CharField(max_length=100, null=True, blank=True)
     photo = models.CharField(max_length=100)
     mail = models.EmailField(null=True, blank=True)
     facebook = models.CharField(max_length=100, null=True, blank=True)
     twitter = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
+    oknesset = models.CharField(max_length=100, null=True, blank=True)
     coop = models.NullBooleanField(blank=True)
     def __unicode__(self):
         return self.name
