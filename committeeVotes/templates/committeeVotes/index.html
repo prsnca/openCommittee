@@ -93,9 +93,13 @@
 
                             <a href="{% url 'minister' m.id %}">
                         {% endif %}
-                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                    {{ m.name }}
-                    </a>
+                            {% if 'http' in m.photo %}
+                                <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                            {% endif %}
+                        {{ m.name }}
+                        </a>
                     </div>
 
 

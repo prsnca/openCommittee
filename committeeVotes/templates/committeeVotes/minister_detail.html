@@ -90,7 +90,11 @@
             </div>
             <div class="col-md-4">
                 <div class="pull-left">
-                    <img src="{{ MEDIA_URL }}{{ minister.photo }}.jpg">
+                    {% if 'http' in minister.photo %}
+                        <img src="{{ minister.photo }}.jpg">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}{{ minister.photo }}.jpg">
+                    {% endif %}
                 </div>
             </div>
         </div>
