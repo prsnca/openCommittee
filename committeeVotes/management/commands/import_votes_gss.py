@@ -13,7 +13,7 @@ from django.db import connection
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "committeeVotes.settings") # Replace with your app name.
 
-URL = "https://spreadsheets.google.com/feeds/list/0At1NTaJzNdl3dEhmb2NRM2VQei1JbnFacnRlM19lemc/od7/public/values?alt=json"
+URL = "https://spreadsheets.google.com/feeds/list/1KNFehdsumR-GVq4hlHUC7h2lfGwFKk-7pwluwdykL-w/3/public/values?alt=json"
 
 def get_meeting(date):
     try:
