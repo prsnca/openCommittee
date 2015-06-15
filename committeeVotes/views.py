@@ -9,7 +9,7 @@ import json
 
 def index(request):
     bills = Bill.objects.all().order_by('-id')[:10]
-    ministers = Minister.objects.all()
+    ministers = Minister.objects.all().order_by('id')
     context = {'bills': bills,
                'ministers': ministers}
     return render(request, 'committeeVotes/index.html', context)
