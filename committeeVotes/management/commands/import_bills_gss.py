@@ -19,9 +19,9 @@ URL = "https://spreadsheets.google.com/feeds/list/1KNFehdsumR-GVq4hlHUC7h2lfGwFK
 def vote_to_bool(vote):
     if not vote or vote == '':
         return None
-    if vote == 'בעד':
+    if vote == u'בעד':
         return True
-    elif vote == 'נגד':
+    elif vote == u'נגד':
         return False
 
 BILL_FIELDS = [
