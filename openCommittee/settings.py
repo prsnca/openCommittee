@@ -65,13 +65,17 @@ WSGI_APPLICATION = 'openCommittee.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django_postgrespool',
         'NAME': 'openCommittee',
         'USER': 'openCommittee',
         'PASSWORD': 'openCommittee',
         'HOST': 'localhost',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',  # Set to empty string for default.
     }
+}
+
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2'
 }
 
 # Internationalization
@@ -99,6 +103,7 @@ MEDIA_URL = "http://www.knesset.gov.il/mk/images/members/"
 if os.environ.get('DATABASE_URL'): # Heroku
     import dj_database_url
     DATABASES['default'] =  dj_database_url.config()
+    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
