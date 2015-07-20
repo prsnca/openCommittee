@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
+from committeeVotes.serializers import BillSerializer, MinisterSerializer
+from rest_framework import viewsets
 import json
 
 
@@ -65,10 +67,18 @@ def bills(request):
     context = {'bills': bills}
     return render(request, 'committeeVotes/bills.html', context)
 
+class BillViewSet(viewsets.ModelViewSet):
+    queryset = Bill.objects.all()
+    serializer_class = BillSerializer
+
 def ministers(request):
     ministers = Minister.objects.all()
     context = {'ministers': ministers}
     return render(request, 'committeeVotes/ministers.html', context)
+
+class MinisterViewSet(viewsets.ModelViewSet):
+    queryset = Minister.objects.all()
+    serializer_class = MinisterSerializer
 
 def meetings(request):
     meetings = Meeting.objects.all().order_by('-id')
