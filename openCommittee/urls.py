@@ -22,6 +22,8 @@ urlpatterns = patterns('',
 
 
     url(r'^$', views.index, name='index'),
+    url(r'^new/$', views.new_index, name='new_index'),
+
     url(r'^bills/$', views.bills, name='bills'),
     url(r'^bills/(?P<bill_id>\d+)/$', views.bill, name='bill'),
 

@@ -16,6 +16,9 @@ def index(request):
                'ministers': ministers}
     return render(request, 'committeeVotes/index.html', context)
 
+def new_index(request):
+    return render(request, 'committeeVotes/new_index.html')
+
 def search(request):
     ministerSearch = [dict([("url", reverse('minister', args=(minister.id,))),
                             ("name", minister.name),

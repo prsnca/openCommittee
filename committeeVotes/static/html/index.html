@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-{% block content %}
-
-    <div class="container">
+<div class="container">
         <div class="row">
             <div class="cards col-md-12">
                 <section class="card card-list card-list-latest compact">
@@ -42,12 +39,10 @@
 
                         </tr>
                         </thead>
-                        {% for b in bills %}
-
-                            <tr>
+                            <tr ng-repeat="bill in bills">
                                 <td>
-                                    <a href="{% url 'bill' b.id %}">
-                                        {{ b.name }}
+                                    <a href="{% url 'bill' {[{ bill.id }]} %}">
+                                        {[{ bill.name }]}
                                         <button class="btn btn-info pull-left">
                                             <span class="fa fa-plus"></span>
                                         </button>
@@ -55,7 +50,6 @@
 
                                 </td>
                             </tr>
-                        {% endfor %}
                         <tr>
                             <td>
                                 <div class="pull-left">
@@ -72,6 +66,8 @@
 
 
             </div>
+
+
             <div class="cards col-md-6">
                 <section class="card card-list card-list-latest compact">
                     <header>
@@ -112,7 +108,6 @@
             </div>
         </div>
     </div>
-    </div>
     <div class="modal fade" id="notCoop" tabindex="-1" role="dialog" aria-labelledby="notCoopLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,8 +126,3 @@
         </div>
         <!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
-{% endblock %}
-{% block js %}
-<script src="{{ STATIC_URL }}/js/app.js"></script>
-{% endblock js %}
