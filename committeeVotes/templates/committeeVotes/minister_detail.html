@@ -136,15 +136,9 @@
             </div>
             <div class="col-md-4 hidden-sm hidden-xs">
                 <div class="pull-left">
-                    {% if 'http' in minister.photo %}
-                        <img src="{{ minister.photo }}.jpg">
-                    {% else %}
-                        <img src="{{ MEDIA_URL }}{{ minister.photo }}.jpg">
-                    {% endif %}
+                    <img src="{{ minister.photo_url }}">
                 </div>
             </div>
         </div>
     </div>
-
-
 {% endblock %}
