@@ -5,7 +5,7 @@ from rest_framework import serializers
 class BillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Bill
-        fields = ('name', 'oknesset_url', 'passed')
+        fields = ('id', 'name', 'oknesset_url', 'passed')
 
 
 class MinisterSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,0 +1,79 @@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <span ng-if="bill.oknesset_url == ''">
+                    <a target="_blank" href="{[{ bill.oknesset_url }]}"
+                </span>
+                <span ng-if="bill.oknesset_url != ''">
+                    <a href="#"/>
+                </span>
+
+                <h1 title="שם ההצעה">
+                    {[{ bill.name }]}
+                </h1>
+            </div>
+            <span ng-if="bill.passed !== null">
+                <div class="col-md-2 decision">
+                    <h2 class="pull-left" title="החלטת הועדה">
+                        <span ng-if="bill.passed">
+                            <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
+                        עבר בועדה
+                            </span>
+                        </span>
+                       <span ng-if="!bill.passed">
+                            <span class="badge" style="background-color:red; vertical-align:middle; font-size:24px;">
+נפל בועדה
+                            </span>
+                        </span>
+                    </h2>
+                </div>
+            </span>
+
+        </div>
+
+        <div class="row">
+            {% for vote_type, votes in votes_by_type %}
+                <div class="col-md-4 voteType">
+                    <h4>
+                        {{ vote_type }}
+                    </h4>
+                    {% for v in votes %}
+                        <div class="minister-photo">
+                            <a href="{% url 'minister' v.minister.id %}">
+                                <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                                {{ v.minister }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                    {% if not votes %}
+                        <div class="no-votes">
+                        אין הצבעות
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+<hr/>
+        <div class="row">
+            <div class="col-md-12 voteType">
+                <h4>
+                    אינם חושפים את הצבעתם
+                </h4>
+                {% for m in unknown_ministers %}
+                    <div class="minister-photo">
+                        <a href="{% url 'minister' m.id %}">
+                            {% if 'http' in m.photo %}
+                                <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                            {% endif %}
+                            {{ m }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
