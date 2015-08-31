@@ -43,7 +43,7 @@
                     {% for v in votes %}
                         <div class="minister-photo">
                             <a href="{% url 'minister' v.minister.id %}">
-                                <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                                <img src="{{ v.minister.photo_url }}">
                                 {{ v.minister }}
                             </a>
                         </div>
