@@ -9,19 +9,12 @@
                             הצעות חוק
                         </h2>
                     </header>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th class="text-right">
-                                שם ההצעה
-                            </th>
-
-                        </tr>
-                        </thead>
-                            <tr ng-repeat="bill in bills">
-                                <td><a ui-sref="bill({ billId: bill.id})">{[{ bill.name }]}</a></td>
-                            </tr>
+                    <table ng-table="billsTable" class="table table-hover">
+                      <tr ng-repeat="bill in $data">
+                        <td data-title="'שם ההצעה'" ><a ui-sref="bill({ billId: bill.id})">{[{bill.name}]}</a></td>
+                      </tr>
                     </table>
+
 
                 </section>
 

@@ -1,4 +1,4 @@
-var app = angular.module('openCommitteeApp', ['ui.router']);
+var app = angular.module('openCommitteeApp', ['ui.router', 'ngTable']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
@@ -64,10 +64,9 @@ function ($scope, bills, ministers) {
 
 }]);
 
-app.controller('billsCtrl', ['$scope','bills',
-function ($scope, bills) {
-    $scope.bills = bills;
-
+app.controller('billsCtrl', ['$scope','bills','NgTableParams',
+function ($scope, bills, NgTableParams) {
+    $scope.billsTable = new NgTableParams({ count: 10 }, { counts: [], data: bills});
 }]);
 
 app.controller('billCtrl', ['$scope','bill',
