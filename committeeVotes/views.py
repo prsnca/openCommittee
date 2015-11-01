@@ -9,9 +9,14 @@ import json
 
 def index(request):
     bills = Bill.objects.all().order_by('-id')[:10]
-    ministers = Minister.objects.all().order_by('id')
+    last_meeting = Meeting.objects.all().order_by('-id')[0]
+    votingMinisters = last_meeting.voting_ministers.all()
+    votingIds = votingMinisters.values_list('id', flat=True)
+    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds)
     context = {'bills': bills,
-               'ministers': ministers}
+               'last_meeting': last_meeting,
+               'votingMinisters': votingMinisters,
+               'nonVotingMinisters': nonVotingMinisters}
     return render(request, 'committeeVotes/index.html', context)
 
 def search(request):
@@ -81,7 +86,12 @@ def about(request):
 def meeting_details(request, meeting_id):
     meeting = get_object_or_404(Meeting,pk=meeting_id)
     bills = meeting.proposed_bills.all()
+    votingMinisters = meeting.voting_ministers.all()
+    votingIds = votingMinisters.values_list('id', flat=True)
+    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds)
     context = {'meeting': meeting,
-               'bills': bills}
+               'bills': bills,
+               'votingMinisters': votingMinisters,
+               'nonVotingMinisters': nonVotingMinisters}
     return render(request, 'committeeVotes/meeting_detail.html', context)
 

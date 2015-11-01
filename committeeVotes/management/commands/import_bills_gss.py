@@ -59,7 +59,10 @@ class Command(BaseCommand):
             if not Bill.objects.filter(name=bill.name).count() == 0:
                 print "Bill already exists!"
             else:
-                bill.save()
-                print "Bill saved!"
+                if bill.passed is not None:
+                    bill.save()
+                    print "Bill saved!"
+                else:
+                    print "Bill has no vote"
         print 'Done importing bills from google spreadsheet!'
 

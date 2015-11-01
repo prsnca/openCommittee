@@ -89,6 +89,11 @@ class Command(BaseCommand):
             except:
                 print "error in adding bill to meeting"
                 continue
+            try:
+                vote.meeting.voting_ministers.add(vote.minister)
+            except:
+                print "error in adding minister to meeting"
+                continue
             if not Vote.objects.filter(bill=vote.bill, minister=vote.minister).count() == 0:
                 print "Vote already exists!"
             else:

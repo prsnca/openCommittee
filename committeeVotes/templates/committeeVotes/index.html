@@ -12,12 +12,10 @@
                     </header>
                     <ul>
                         <li>
-                            ועדת השרים לענייני חקיקה היא המקום בו הממשלה מחליטה האם היא תומכת או מתנגדת להצעות חוק. כל
-                            הצעות
-                            החוק עוברות דרך הועדה, וללא תמיכת הממשלה אין להצעת החוק כמעט שום סיכוי לעבור בכנסת. הועדה
-                            מתנהלת
-                            בחוסר שקיפות חריג, כך שכל המידע באתר נמסר מרצונם החופשי של שרים החברים בועדה ותומכים
-                            בשקיפות.
+                            ועדת השרים לענייני חקיקה היא המקום בו הממשלה מחליטה האם היא תומכת או מתנגדת להצעות חוק.
+                             כל הצעות החוק עוברות דרך הועדה, וללא תמיכת הממשלה אין להצעת החוק כמעט שום סיכוי לעבור בכנסת.
+                             הועדה מתנהלת בחוסר שקיפות חריג, כך שכל המידע באתר נמסר מרצונם החופשי של שרים החברים בועדה ותומכים בשקיפות.
+                            אנו משתפים פעולה עם מיזם <a href="http://shkifut.info" target="_blank">׳מאה ימים של שקיפות׳</a> שמדי שבוע מבקשים מהשרים לחשוף את הצבעותיהם בצורה וולנטארית.
                         </li>
                     </ul>
                 </section>
@@ -25,11 +23,92 @@
         </div>
 
         <div class="row">
-            <div class="cards col-md-6">
+            <div class="cards col-md-12">
                 <section class="card card-list card-list-latest compact">
                     <header>
                         <h2>
-                            הצעות אחרונות
+ישיבה אחרונה - {{ last_meeting.took_place }}
+                        </h2>
+                    </header>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-right">
+שרים שחשפו את הצבעותיהם
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                              {% for m in votingMinisters %}
+
+                                <div class="minister-photo">
+                                  <a href="{% url 'minister' m.id %}">
+                                    {% if 'http' in m.photo %}
+                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                                    {% else %}
+                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                                    {% endif %}
+                                    {{ m }}
+                                  </a>
+                                </div>
+                                {% endfor %}
+
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-right">
+שרים שלא חשפו את הצבעותיהם
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                              {% for m in nonVotingMinisters %}
+
+                                <div class="minister-photo disabled">
+                                  <a href="{% url 'minister' m.id %}">
+                                    {% if 'http' in m.photo %}
+                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                                    {% else %}
+                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                                    {% endif %}
+                                    {{ m }}
+                                  </a>
+                                </div>
+                                {% endfor %}
+
+                            </td>
+                        </tr>
+                    <tr>
+                        <td>
+                        <div class="pull-left">
+                                    <a href="{% url 'meetings' %}" class="btn btn-primary pull-left" role="button">
+לישיבות נוספות
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </div>
+                        </td>
+                    </tr>
+
+                    </table>
+
+                </section>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cards col-md-12">
+                <section class="card card-list card-list-latest compact">
+                    <header>
+                        <h2>
+                            הצעות חוק אחרונות
                         </h2>
                     </header>
 
@@ -72,64 +151,9 @@
 
 
             </div>
-            <div class="cards col-md-6">
-                <section class="card card-list card-list-latest compact">
-                    <header>
-                        <h2>
-                            שרים
-                        </h2>
-                    </header>
-                <ul>
-                    <li>
 
-                    <div class="ministers">
-                    {% for m in ministers %}
-                        {% if not m.coop %}
-                            <div class="minister-photo disabled">
-
-                            <a href="#notCoop" data-toggle="modal">
-                        {% else %}
-                            <div class="minister-photo">
-
-                            <a href="{% url 'minister' m.id %}">
-                        {% endif %}
-                            {% if 'http' in m.photo %}
-                                <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
-                            {% else %}
-                                <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                            {% endif %}
-                        {{ m.name }}
-                        </a>
-                    </div>
-
-
-
-                    {% endfor %}
-                        </div>
-                    </li>
-                </ul>
-                </section>
-            </div>
         </div>
     </div>
-    </div>
-    <div class="modal fade" id="notCoop" tabindex="-1" role="dialog" aria-labelledby="notCoopLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p>
-                        שר זה אינו חושף את הצבעותיו!
-                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
-                            סגור
-                        </button>
-                    </p>
 
-                </div>
-
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
 {% endblock %}

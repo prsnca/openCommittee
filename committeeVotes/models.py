@@ -13,12 +13,6 @@ class VoteType(models.Model):
     def __unicode__(self):
         return self.typeName
 
-class Meeting(models.Model):
-    took_place = models.DateField(unique=True)
-    proposed_bills = models.ManyToManyField(Bill, blank=True)
-    def __unicode__(self):
-        return "Meeting #" + str(self.id) + u" - %s" % self.took_place
-
 class Minister(models.Model):
     name = models.CharField(max_length=30)
     title = models.CharField(max_length=100, null=True, blank=True)
@@ -31,6 +25,13 @@ class Minister(models.Model):
     coop = models.NullBooleanField(blank=True)
     def __unicode__(self):
         return self.name
+
+class Meeting(models.Model):
+    took_place = models.DateField(unique=True)
+    proposed_bills = models.ManyToManyField(Bill, blank=True)
+    voting_ministers = models.ManyToManyField(Minister, blank=True)
+    def __unicode__(self):
+        return "Meeting #" + str(self.id) + u" - %s" % self.took_place
 
 class Vote(models.Model):
     vote = models.ForeignKey(VoteType)
