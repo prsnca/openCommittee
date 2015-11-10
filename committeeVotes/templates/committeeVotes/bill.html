@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load custom_tags %}
 {% block content %}
     {% load staticfiles %}
 
@@ -37,13 +38,17 @@
         <div class="row">
             {% for vote_type, votes in votes_by_type %}
                 <div class="col-md-4 voteType">
-                    <h4>
+                    <h4 class="bill-vote {{ vote_type | vote_style }}">
                         {{ vote_type }}
                     </h4>
                     {% for v in votes %}
                         <div class="minister-photo">
                             <a href="{% url 'minister' v.minister.id %}">
-                                <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                                {% if 'http' in v.minister.photo %}
+                                    <img src="{{ v.minister.photo }}.jpg" style="width: 75px; height: 110px">
+                                {% else %}
+                                    <img src="{{ MEDIA_URL }}{{ v.minister.photo }}-s.jpg">
+                                {% endif %}
                                 {{ v.minister }}
                             </a>
                         </div>

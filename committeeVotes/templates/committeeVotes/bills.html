@@ -18,6 +18,9 @@
                             <th class="text-right">
                                 שם ההצעה
                             </th>
+                            <th>
+                                החלטת הועדה
+                            </th>
 
                         </tr>
                         </thead>
@@ -25,6 +28,9 @@
 
                             <tr>
                                 <td><a href="{% url 'bill' b.id %}">{{ b.name }}</a></td>
+                                <td class="minister-vote {{ b.passed | yesno:"yay,nay" }}">
+                                    {{ b.passed | yesno:"בעד,נגד" }}
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>

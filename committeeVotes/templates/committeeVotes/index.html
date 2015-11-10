@@ -118,7 +118,9 @@
                             <th class="text-right">
                                 שם ההצעה
                             </th>
-
+                            <th>
+                                החלטת הועדה
+                            </th>
                         </tr>
                         </thead>
                         {% for b in bills %}
@@ -127,15 +129,18 @@
                                 <td>
                                     <a href="{% url 'bill' b.id %}">
                                         {{ b.name }}
-                                        <button class="btn btn-info pull-left">
-                                            <span class="fa fa-plus"></span>
-                                        </button>
-                                    </a>
 
+                                    </a>
+                                </td>
+                                <td class="minister-vote {{ b.passed | yesno:"yay,nay" }}">
+                                    {{ b.passed | yesno:"בעד,נגד" }}
                                 </td>
                             </tr>
                         {% endfor %}
                         <tr>
+                            <td>
+
+                            </td>
                             <td>
                                 <div class="pull-left">
                                     <a href="{% url 'bills' %}" class="btn btn-primary pull-left" role="button">

@@ -555,6 +555,15 @@ ul, ol, table {
     text-align: center;
     background-clip: content-box;
     font-weight: bold;
+    width: 70px;
+    border-top-left-radius: 25px 25px;
+}
+
+.bill-vote {
+    background-clip: border-box;
+    margin: 10px 100px 10px;
+    padding: 5px;
+    border-radius: 25px;
 }
 
 .yay {

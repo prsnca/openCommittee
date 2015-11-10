@@ -24,6 +24,7 @@ def vote_style(value):
     else:
         return "abstain"
 
+
 register.simple_tag(active_page)
 #register.filter('vote_style', vote_style)
 
