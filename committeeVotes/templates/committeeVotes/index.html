@@ -30,75 +30,7 @@
 ישיבה אחרונה - {{ last_meeting.took_place }}
                         </h2>
                     </header>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="text-right">
-שרים שחשפו את הצבעותיהם
-                            </th>
-
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>
-                              {% for m in votingMinisters %}
-
-                                <div class="minister-photo">
-                                  <a href="{% url 'minister' m.id %}">
-                                    {% if 'http' in m.photo %}
-                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                                    {% endif %}
-                                    {{ m }}
-                                  </a>
-                                </div>
-                                {% endfor %}
-
-                            </td>
-                        </tr>
-
-                    </table>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="text-right">
-שרים שלא חשפו את הצבעותיהם
-                            </th>
-
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>
-                              {% for m in nonVotingMinisters %}
-
-                                <div class="minister-photo disabled">
-                                  <a href="{% url 'minister' m.id %}">
-                                    {% if 'http' in m.photo %}
-                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                                    {% endif %}
-                                    {{ m }}
-                                  </a>
-                                </div>
-                                {% endfor %}
-
-                            </td>
-                        </tr>
-                    <tr>
-                        <td>
-                        <div class="pull-left">
-                                    <a href="{% url 'meetings' %}" class="btn btn-primary pull-left" role="button">
-לישיבות נוספות
-                                        <span class="fa fa-plus"></span>
-                                    </a>
-                                </div>
-                        </td>
-                    </tr>
-
-                    </table>
-
+                    {% include "committeeVotes/meeting_ministers.html" with is_index=True %}
                 </section>
             </div>
         </div>

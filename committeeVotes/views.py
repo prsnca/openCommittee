@@ -12,10 +12,13 @@ def index(request):
     last_meeting = Meeting.objects.all().order_by('-id')[0]
     votingMinisters = last_meeting.voting_ministers.all()
     votingIds = votingMinisters.values_list('id', flat=True)
-    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds)
+    missingMinisters = last_meeting.missing_ministers.all()
+    missingIds = missingMinisters.values_list('id', flat=True)
+    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds).exclude(id__in=missingIds)
     context = {'bills': bills,
                'last_meeting': last_meeting,
                'votingMinisters': votingMinisters,
+               'missingMinisters': missingMinisters,
                'nonVotingMinisters': nonVotingMinisters}
     return render(request, 'committeeVotes/index.html', context)
 
@@ -88,10 +91,13 @@ def meeting_details(request, meeting_id):
     bills = meeting.proposed_bills.all()
     votingMinisters = meeting.voting_ministers.all()
     votingIds = votingMinisters.values_list('id', flat=True)
-    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds)
+    missingMinisters = meeting.missing_ministers.all()
+    missingIds = missingMinisters.values_list('id', flat=True)
+    nonVotingMinisters = Minister.objects.exclude(id__in=votingIds).exclude(id__in=missingIds)
     context = {'meeting': meeting,
                'bills': bills,
                'votingMinisters': votingMinisters,
+               'missingMinisters': missingMinisters,
                'nonVotingMinisters': nonVotingMinisters}
     return render(request, 'committeeVotes/meeting_detail.html', context)
 

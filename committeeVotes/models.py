@@ -29,7 +29,8 @@ class Minister(models.Model):
 class Meeting(models.Model):
     took_place = models.DateField(unique=True)
     proposed_bills = models.ManyToManyField(Bill, blank=True)
-    voting_ministers = models.ManyToManyField(Minister, blank=True)
+    voting_ministers = models.ManyToManyField(Minister, blank=True, related_name='meeting_voting_minister')
+    missing_ministers = models.ManyToManyField(Minister, blank=True, related_name='meeting_missing_minister')
     def __unicode__(self):
         return "Meeting #" + str(self.id) + u" - %s" % self.took_place
 

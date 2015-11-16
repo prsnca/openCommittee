@@ -19,64 +19,8 @@
         <h3>
             הצבעות השרים
         </h3>
-                         <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="text-right">
-שרים שחשפו את הצבעותיהם
-                            </th>
+                    {% include "committeeVotes/meeting_ministers.html" with is_index=False %}
 
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>
-                              {% for m in votingMinisters %}
-
-                                <div class="minister-photo">
-                                  <a href="{% url 'minister' m.id %}">
-                                    {% if 'http' in m.photo %}
-                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                                    {% endif %}
-                                    {{ m }}
-                                  </a>
-                                </div>
-                                {% endfor %}
-
-                            </td>
-                        </tr>
-
-                    </table>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th class="text-right">
-שרים שלא חשפו את הצבעותיהם
-                            </th>
-
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>
-                              {% for m in nonVotingMinisters %}
-
-                                <div class="minister-photo disabled">
-                                  <a href="{% url 'minister' m.id %}">
-                                    {% if 'http' in m.photo %}
-                                        <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
-                                    {% endif %}
-                                    {{ m }}
-                                  </a>
-                                </div>
-                                {% endfor %}
-
-                            </td>
-                        </tr>
-
-                    </table>
                     <h3>
 הצעות החוק שעלו בישיבה
             </h3>

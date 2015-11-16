@@ -68,7 +68,7 @@
                     אינם חושפים את הצבעתם
                 </h4>
                 {% for m in unknown_ministers %}
-                    <div class="minister-photo">
+                    <div class="minister-photo missing">
                         <a href="{% url 'minister' m.id %}">
                             {% if 'http' in m.photo %}
                                 <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">

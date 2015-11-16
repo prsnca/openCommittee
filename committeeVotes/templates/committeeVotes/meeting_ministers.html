@@ -1,0 +1,101 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th class="text-right">
+שרים שחשפו את הצבעותיהם
+        </th>
+
+    </tr>
+    </thead>
+    <tr>
+        <td>
+          {% for m in votingMinisters %}
+
+            <div class="minister-photo">
+              <a href="{% url 'minister' m.id %}">
+                {% if 'http' in m.photo %}
+                    <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                {% else %}
+                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                {% endif %}
+                {{ m }}
+              </a>
+            </div>
+            {% endfor %}
+
+        </td>
+    </tr>
+
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th class="text-right">
+שרים שלא חשפו את הצבעותיהם
+        </th>
+
+    </tr>
+    </thead>
+    <tr>
+        <td>
+          {% for m in nonVotingMinisters %}
+
+            <div class="minister-photo disabled">
+              <a href="{% url 'minister' m.id %}">
+                {% if 'http' in m.photo %}
+                    <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                {% else %}
+                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                {% endif %}
+                {{ m }}
+              </a>
+            </div>
+            {% endfor %}
+
+        </td>
+    </tr>
+
+{% if missingMinisters %}
+</table>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th class="text-right">
+            שרים שנעדרו <מהישיבה></מהישיבה>
+        </th>
+
+    </tr>
+    </thead>
+    <tr>
+        <td>
+          {% for m in missingMinisters %}
+
+            <div class="minister-photo missing">
+              <a href="{% url 'minister' m.id %}">
+                {% if 'http' in m.photo %}
+                    <img src="{{ m.photo }}.jpg" style="width: 75px; height: 110px">
+                {% else %}
+                    <img src="{{ MEDIA_URL }}{{ m.photo }}-s.jpg">
+                {% endif %}
+                {{ m }}
+              </a>
+            </div>
+            {% endfor %}
+
+        </td>
+    </tr>
+{% endif %}
+{% if is_index %}
+    <tr>
+        <td>
+            <div class="pull-left">
+                <a href="{% url 'meetings' %}" class="btn btn-primary pull-left" role="button">
+לישיבות נוספות
+                    <span class="fa fa-plus"></span>
+                </a>
+            </div>
+        </td>
+    </tr>
+    {% endif %}
+</table>
