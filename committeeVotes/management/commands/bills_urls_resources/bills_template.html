@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title> OpenComittee bill upload </title>
+
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript">
+		function highlightRow(checkbox){
+			var row = checkbox.parentElement.parentElement;
+			// toggle row class.
+
+			if(checkbox.checked)
+				row.className = "success";
+			else {
+				if(row.hasAttribute("data-bad-match"))
+					row.className = "danger";
+				else
+					row.className = "";
+
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+	  var CLIENT_ID={{ "\"" + credentials['client_id'] + "\""}};
+	  var SCOPES = ['https://www.googleapis.com/auth/script.storage','https://www.googleapis.com/auth/spreadsheets'];
+	  var loaded = false;
+	  function checkAuth() {
+	  	console.log("checkAuth");
+	    gapi.auth.authorize(
+	      {
+	        'client_id': CLIENT_ID,
+	        'scope': SCOPES.join(' '),
+	        'immediate': true
+	      });
+	  }
+
+	  function handleAuthResult(authResult) {
+	    if (authResult && !authResult.error) {
+	      // Hide auth UI, then load client library.
+	      var selectedRows = document.querySelectorAll('tr.success');
+	      var rowElement;
+	      var rowToValueMaps = [];
+	      for(var i=0;i<selectedRows.length;i++){
+	      	rowElement = selectedRows[i];
+	      	console.dir(rowElement.childNodes)
+	      	console.dir(rowElement.childNodes[1]);
+	      	console.dir(rowElement.childNodes[1].textContent);
+	      	rowToValueMaps.push({
+	      		row: parseInt(rowElement.childNodes[1].textContent, 10),
+	      		value: rowElement.childNodes[5].childNodes[1].href
+	      	});
+	      }
+	      updateBills(rowToValueMaps, "oknesset_url");
+	    } else {
+	      // Show auth UI, allowing the user to initiate authorization by
+	      // clicking authorize button.
+	      console.log(authResult);
+	    }
+	  }
+
+	  function handleAuthClick(){
+	    gapi.auth.authorize(
+	      {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+	      handleAuthResult);
+	    return false;
+	  }
+
+	  function updateBills(updatedRows,columnToUpdate) {
+	    var scriptId = {{ "\"" + credentials['script_id'] + "\"" }};
+
+	    // Create an execution request object.
+	    var request = {
+	        'function': 'updateRows',
+	        'parameters':[updatedRows, "oknesset_url"]
+	        };
+
+	    // Make the API request.
+	    var op = gapi.client.request({
+	        'root': 'https://script.googleapis.com',
+	        'path': 'v1/scripts/' + scriptId + ':run',
+	        'method': 'POST',
+	        'body': request
+	    });
+
+	    op.execute(function(resp) {
+	      if (resp.error && resp.error.status) {
+	        // The API encountered a problem before the script
+	        // started executing.
+	        console.log('Error calling API:');
+	        console.log(JSON.stringify(resp, null, 2));
+	      } else if (resp.error) {
+	        // The API executed, but the script returned an error.
+
+	        // Extract the first (and only) set of error details.
+	        // The values of this object are the script's 'errorMessage' and
+	        // 'errorType', and an array of stack trace elements.
+	        var error = resp.error.details[0];
+	        console.log('Script error message: ' + error.errorMessage);
+
+	        if (error.scriptStackTraceElements) {
+	          // There may not be a stacktrace if the script didn't start
+	          // executing.
+	          console.log('Script error stacktrace:');
+	          for (var i = 0; i < error.scriptStackTraceElements.length; i++) {
+	            var trace = error.scriptStackTraceElements[i];
+	            console.log('\t' + trace.function + ':' + trace.lineNumber);
+	          }
+	        }
+	      } else {
+	        // The structure of the result will depend upon what the Apps
+	        // Script function returns. Here, the function returns an Apps
+	        // Script Object with String keys and values, and so the result
+	        // is treated as a JavaScript object (folderSet).
+	        var succeeded = resp.response;
+	        if (succeeded) {
+	            alert('Change succeeded!');
+	        } else {
+	          console.log('Change failed');
+	        }
+	      }
+	    });
+	  }
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+
+<style type="text/css">
+	@import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+	body{
+		font-family: "Alef Hebrew",
+		“Helvetica Neue”,
+		Helvetica,
+		Arial,
+		sans-serif;
+	}
+	td{
+		direction: rtl;
+		font-size: 1.2em;
+	}
+</style>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered" >
+					<thead>
+						<tr>
+							<th>
+								#
+							</th>
+							<th>
+								Bill name
+							</th>
+							<th>
+								OpenKnesset url
+							</th>
+							<th>
+								Match ratio
+							</th>
+							<th>
+								Fill in spreadsheet?
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for bill in bills %}
+						<tr {{ 'data-bad-match class="danger"' if bill.match_ratio < 0.5 }}>
+							<td class="id">
+								{{ bill.id }}
+							</td>
+							<td class="name">
+								{{ bill.name }}
+							</td>
+							<td class="oknesset_url">
+								<a href="{{ bill.oknesset_url }}">Oknesset</a>
+							</td>
+							<td class="ratio">
+								{{ "{:0.3f}".format(bill.match_ratio) }}
+							</td>
+							<td>
+								<input type="checkbox" onclick="highlightRow(this)" value="" autocomplete="off">
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<button type="button" class="btn btn-primary btn-block btn-lg" onclick="handleAuthClick()">Submit</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
