@@ -10,3 +10,4 @@
 db.sqlite3
 *.csv
 *.json
+/committeeVotes/management/commands/bills_urls_resources/bills.html
