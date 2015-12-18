@@ -143,8 +143,8 @@ class Command(BaseCommand):
             return
 
     option_list = BaseCommand.option_list + (
-        make_option('-d', '--date', dest="date", action="callback", type=str, callback=parse_date,
-                    help="Show bills for commitee meetings made since this date in format m/d/y. Defaults to a week ago."),
+        make_option('-d', '--date', dest="date",default = datetime.date.today() - datetime.timedelta(weeks = 2), action="callback", type=str, callback=parse_date,
+                    help="Show bills for commitee meetings made since this date in format m/d/y. Defaults to two weeks ago."),
         make_option('-p', '--port', nargs='?', default=8080, type=int,
                     help="The port to serve the bills html on. Defaults to 8080")
     )
