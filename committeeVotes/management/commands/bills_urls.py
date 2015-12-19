@@ -36,7 +36,7 @@ TEMPLATE_FILENAME = "bills_template.html"
 
 RENDERED_OUTPUT_PATH = RESOURCES_PATH + "/bills.html"
 
-Bill = namedtuple("Bill", "id name oknesset_url match_ratio")
+Bill = namedtuple("Bill", "id name oknesset_url oknesset_name match_ratio")
 
 
 def get_all_oknesset_bills():
@@ -69,7 +69,7 @@ def get_bill_url(oknesset_bills, bill_name):
             max_ratio = ratio
             matched_bill = bill
     if matched_bill is not None:
-        return "http://www.oknesset.org{0}".format(matched_bill["absolute_url"]), max_ratio
+        return "http://www.oknesset.org{0}".format(matched_bill["absolute_url"]), max_ratio, matched_bill["full_title"]
     return None, None
 
 
@@ -105,9 +105,9 @@ def get_commitee_bills_since(since_date=None):
 def get_matched_bills(commitee_bills, oknesset_bills):
     matched_bills = []
     for bill_id, bill_name in commitee_bills:
-        url, ratio = get_bill_url(oknesset_bills, bill_name)
+        url, ratio, oknesset_name = get_bill_url(oknesset_bills, bill_name)
         if url is not None:
-            matched_bills.append(Bill(bill_id, bill_name, url, ratio))
+            matched_bills.append(Bill(bill_id, bill_name, url, oknesset_name, ratio))
     return matched_bills
 
 

@@ -156,10 +156,7 @@
 								#
 							</th>
 							<th>
-								Bill name
-							</th>
-							<th>
-								OpenKnesset url
+								Bill name + Match
 							</th>
 							<th>
 								Match ratio
@@ -172,22 +169,24 @@
 					<tbody>
 						{% for bill in bills %}
 						<tr {{ 'data-bad-match class="danger"' if bill.match_ratio < 0.5 }}>
-							<td class="id">
+							<td rowspan="2" class="id">
 								{{ bill.id }}
 							</td>
 							<td class="name">
 								{{ bill.name }}
 							</td>
-							<td class="oknesset_url">
-								<a href="{{ bill.oknesset_url }}" target="_blank">Oknesset</a>
-							</td>
-							<td class="ratio">
+							<td rowspan="2" class="ratio">
 								{{ "{:0.3f}".format(bill.match_ratio) }}
 							</td>
-							<td>
+							<td rowspan="2">
 								<input type="checkbox" onclick="highlightRow(this)" value="" autocomplete="off">
 							</td>
 						</tr>
+                        <tr {{ 'data-bad-match class="danger"' if bill.match_ratio < 0.5 }}>
+                            <td class="oknesset_url" >
+                                {{ bill.oknesset_name }} - <a href="{{ bill.oknesset_url }}" target="_blank">Oknesset</a>
+                            </td>
+                        </tr>
 						{% endfor %}
 					</tbody>
 				</table>
