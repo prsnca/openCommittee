@@ -10,4 +10,5 @@
 db.sqlite3
 *.csv
 *.json
+**.DS_Store
 /committeeVotes/management/commands/bills_urls_resources/bills.html
