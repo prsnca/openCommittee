@@ -18,6 +18,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: 'Alef', Arial;
 }
 
+.nav.navbar-nav {
+    padding-right: 10px;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 10px;
+}
+.right-inner-addon i {
+    position: absolute;
+    left: 0px;
+    padding: 8px 12px;
+    pointer-events: none;
+}
+
 #search {
     text-align: right;
 }
