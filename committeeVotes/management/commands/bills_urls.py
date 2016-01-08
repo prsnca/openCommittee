@@ -13,7 +13,9 @@ from django.core.management import BaseCommand
 from optparse import make_option
 import webbrowser
 import os
-import threading
+from multiprocessing import Process
+import signal
+import sys
 
 OKNESSET_BILL_API_URL = 'https://oknesset.org/api/v2/bill/?order_by=-stage_date&limit=1000'
 
@@ -128,8 +130,10 @@ def serve_bills_html(port):
     os.chdir(RESOURCES_PATH)
     Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
     httpd = SocketServer.TCPServer(("localhost", port), Handler)
-    threading.Thread(target = lambda: httpd.serve_forever()).start()
-    webbrowser.open("http://127.0.0.1:8080/bills.html")
+    httpd_process = Process(target = lambda: httpd.serve_forever())
+    httpd_process.start()
+    httpd_process.join()
+
 
 
 class Command(BaseCommand):
@@ -163,5 +167,6 @@ class Command(BaseCommand):
         matched_bills = get_matched_bills(commitee_bills, oknesset_bills)
         render_bills(matched_bills)
         port = options['port']
-        print "Serving bills.html on {0}:{1}".format("localhost", port)
+        print "Serving bills.html on {0}:{1}, Ctrl-C to exit.".format("localhost", port)
         serve_bills_html(port)
+
