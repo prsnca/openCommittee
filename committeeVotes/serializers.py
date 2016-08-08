@@ -1,4 +1,4 @@
-from committeeVotes.models import Bill, Meeting, Minister
+from committeeVotes.models import Bill, Meeting, Minister, Vote
 from rest_framework import serializers
 
 
@@ -28,11 +28,28 @@ class DynamicFieldsMixin(object):
                     self.fields.pop(field_name)
 
 
+class VoteSerializer(serializers.ModelSerializer):
+    vote = serializers.StringRelatedField()
+    minister = serializers.StringRelatedField()
+
+    class Meta:
+        model = Vote
+        fields = ('vote', 'minister')
+
+
 class BillSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Bill
         fields = ('id', 'name', 'oknesset_url', 'passed')
+
+
+class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer):
+    votes = VoteSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Bill
+        fields = ('id', 'name', 'oknesset_url', 'passed', 'votes')
 
 class MinisterListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,15 +74,23 @@ class MeetingListSerializer(serializers.ModelSerializer):
         fields = ('id', 'took_place', 'bill_count')
 
 
-class BillInMeetingSerializer(serializers.ModelSerializer):
+class MinisterInMeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Bill
+        model = Minister
         fields = ('id', 'name')
 
 
 class MeetingSerializer(serializers.ModelSerializer):
-    proposed_bills = BillInMeetingSerializer(many=True, read_only=True)
+    proposed_bills = BillSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Meeting
+
+
+class MeetingDetailSerializer(serializers.ModelSerializer):
+    proposed_bills = BillVoteSerializer(many=True, read_only=True)
+    voting_ministers = MinisterInMeetingSerializer(many=True, read_only=True)
 
     class Meta:
         model = Meeting

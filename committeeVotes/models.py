@@ -43,7 +43,7 @@ class Meeting(models.Model):
 class Vote(models.Model):
     vote = models.ForeignKey(VoteType)
     meeting = models.ForeignKey(Meeting)
-    bill = models.ForeignKey(Bill)
+    bill = models.ForeignKey(Bill, related_name="votes")
     minister = models.ForeignKey(Minister, related_name="votes")
 
     class Meta:

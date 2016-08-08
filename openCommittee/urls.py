@@ -30,6 +30,7 @@ urlpatterns = patterns('',
 
     url(r'^meetings/$',views.meetings, name='meetings'),
     url(r'^meetings/(?P<meeting_id>\d+)/$', views.meeting_details, name='meeting'),
+    url(r'^last_meeting.json', views.last_meeting, name='last_meeting'),
 
     url(r'about/$',views.about, name='about'),
 

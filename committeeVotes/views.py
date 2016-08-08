@@ -4,15 +4,13 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
-from committeeVotes.serializers import BillSerializer, MinisterSerializer,MinisterListSerializer, MeetingSerializer,MeetingListSerializer
+from committeeVotes.serializers import BillSerializer, MinisterSerializer,MinisterListSerializer, MeetingSerializer, MeetingListSerializer, MeetingDetailSerializer
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from committeeVotes.serializers import BillSerializer, MinisterSerializer
 from rest_framework import viewsets
-from rest_framework.response import Response
 import json
-
 
 def index(request):
     bills = Bill.objects.all().order_by('-id')[:10]
@@ -41,6 +39,11 @@ def search(request):
                          ("tokens", [bill.name])]) for bill in Bill.objects.all()]
     searchResults = ministerSearch + billsSearch
     return HttpResponse(json.dumps(searchResults), content_type="application/json")
+
+def last_meeting(request):
+    last_meeting = Meeting.objects.latest('took_place')
+    serializer = MeetingDetailSerializer(last_meeting, context={'request': request})
+    return HttpResponse(json.dumps(serializer.data), content_type="application/json")
 
 
 def searchBills(request):

@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'committeeVotes',
     'south',
-        'rest_framework',
+    'rest_framework',
 )
 
 REST_FRAMEWORK = {
