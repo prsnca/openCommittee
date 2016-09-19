@@ -92,11 +92,9 @@
 
 
                                         {% for i in votes.paginator.page_range %}
-                                           {% if i <= (votes.number number + 5)%}
                                             <li  class="{% if votes.number == i %} active {% endif %}" >
                                                 <a href="?page={{i}}">{{i}}</a>
                                             </li>
-                                           {% endif %}
                                         {% endfor %}
 
                                     {% if votes.has_next %}
