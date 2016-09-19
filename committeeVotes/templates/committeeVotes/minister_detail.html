@@ -81,7 +81,32 @@
                                     </tr>
                                 {% endfor %}
 
+
                             </table>
+                             <div class="pagination">
+                                    <ul class="pagination pagination-centered">
+                                        {% if votes.has_previous %}
+                                            <li><a href="?page=1"><<</a></li>
+                                            <li><a href="?page={{ votes.previous_page_number }}"><</a></li>
+                                        {% endif %}
+
+
+                                        {% for i in votes.paginator.page_range %}
+                                           {% if i <= (votes.number number + 5)%}
+                                            <li  class="{% if votes.number == i %} active {% endif %}" >
+                                                <a href="?page={{i}}">{{i}}</a>
+                                            </li>
+                                           {% endif %}
+                                        {% endfor %}
+
+                                    {% if votes.has_next %}
+                                        <li><a href="?page={{ votes.next_page_number }}">></a></li>
+                                        <li><a href="?page={{ votes.paginator.num_pages }}">>></a></li>
+                                    {% endif %}
+
+                                    </ul>
+
+                                </div>
                         </section>
                     {% else %}
                         <h3>

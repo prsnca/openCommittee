@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 import json
 
 
@@ -63,7 +65,18 @@ def bill(request, bill_id):
 
 def minister_details(request, minister_id):
     minister = get_object_or_404(Minister,pk=minister_id)
-    votes = Vote.objects.filter(minister=minister).order_by('-id')
+    all_votes = Vote.objects.filter(minister=minister).order_by('-id')
+    paginator = Paginator(all_votes, 12)
+    page = request.GET.get('page')
+    try:
+        votes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        votes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        votes = paginator.page(paginator.num_pages)
+
     context = {'minister': minister,
                'votes': votes}
     return render(request, 'committeeVotes/minister_detail.html', context)
