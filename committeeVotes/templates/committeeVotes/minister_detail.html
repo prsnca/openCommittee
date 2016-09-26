@@ -83,8 +83,8 @@
 
 
                             </table>
-                             <div class="pagination">
-                                    <ul class="pagination pagination-centered">
+                             <div class="text-center pagination-wrapper">
+                                    <ul class="pagination">
                                         {% if votes.has_previous %}
                                             <li data-toggle="tooltip" title="לעמוד הקודם"><a href="?page={{ votes.previous_page_number }}"><</a></li>
                                         {% endif %}
@@ -125,7 +125,6 @@
                                         {% endif %}
 
                                     </ul>
-
                                 </div>
                         </section>
                     {% else %}
