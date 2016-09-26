@@ -81,7 +81,51 @@
                                     </tr>
                                 {% endfor %}
 
+
                             </table>
+                             <div class="text-center pagination-wrapper">
+                                    <ul class="pagination">
+                                        {% if votes.has_previous %}
+                                            <li data-toggle="tooltip" title="לעמוד הקודם"><a href="?page={{ votes.previous_page_number }}"><</a></li>
+                                        {% endif %}
+
+
+
+                                        {% if votes.number >= 5 %}
+                                            <li><a href="?page=1">1</a></li>
+                                         <li  class="pagination-dots">
+                                                <span>...</span>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in votes.paginator.page_range %}
+                                            <li  class="
+                                                {% if votes.number == i %} active {% endif %}
+
+                                                {% if votes.number|add:4 <=  votes.paginator.num_pages and votes.number < i|add:-1 %}
+                                                 hidden
+                                                {% endif %}
+
+                                                {% if votes.number >= 5 and votes.number > i|add:1 %} hidden {% endif %}"
+                                            >
+                                                <a href="?page={{i}}">{{i}}</a>
+                                            </li>
+                                        {% endfor %}
+
+                                         {% if votes.number|add:4 <=  votes.paginator.num_pages%}
+                                            <li  class="pagination-dots">
+                                                <span>...</span>
+                                            </li>
+                                        <li><a href="?page={{ votes.paginator.num_pages}}">{{votes.paginator.num_pages}}</a></li>
+                                        {% endif %}
+
+                                    {% if votes.has_next %}
+
+                                        <li data-toggle="tooltip" title="לעמוד הבא"><a href="?page={{ votes.next_page_number }}">></a></li>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
                         </section>
                     {% else %}
                         <h3>

@@ -666,6 +666,14 @@ ul, ol, table {
     cursor: pointer;
 }
 
+.pagination-wrapper{
+    margin-bottom: 20px;
+}
+
+.pagination-dots{
+    cursor: default;
+}
+
 hr.minister-hr {
     height: 12px;
     border: 0;
