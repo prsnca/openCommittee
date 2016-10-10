@@ -1,4 +1,6 @@
-from committeeVotes.models import Bill, Meeting, Minister, Vote
+# coding: utf-8
+
+from committeeVotes.models import Bill, Meeting, Minister, Vote, VoteType
 from rest_framework import serializers
 
 
@@ -37,6 +39,11 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = ('vote', 'minister')
 
 
+class VoteListSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        return obj.minister.name
+
+
 class BillSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -45,16 +52,35 @@ class BillSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer)
 
 
 class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer):
-    votes = VoteSerializer(many=True, read_only=True)
+    yay = serializers.SerializerMethodField()
+    nay = serializers.SerializerMethodField()
+    sustained = serializers.SerializerMethodField()
+
+    def get_votes(self, bill, voteTypeName):
+        voteType = VoteType.objects.get(typeName=voteTypeName)
+        qs = Vote.objects.filter(vote=voteType, bill=bill)
+        serializer = VoteListSerializer(instance=qs, many=True)
+        return serializer.data
+
+    def get_yay(self, bill):
+        return self.get_votes(bill, u'בעד')
+
+    def get_nay(self, bill):
+        return self.get_votes(bill, u'נגד')
+
+    def get_sustained(self, bill):
+        return self.get_votes(bill, u'נמנע')
 
     class Meta:
         model = Bill
-        fields = ('id', 'name', 'oknesset_url', 'passed', 'votes')
+        fields = ('id', 'name', 'oknesset_url', 'passed', 'yay', 'nay', 'sustained')
+
 
 class MinisterListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Minister
         fields = ('id', 'name', 'photo_url', 'coop')
+
 
 class MinisterSerializer(MinisterListSerializer):
 
@@ -78,7 +104,7 @@ class MinisterInMeetingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Minister
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'url')
 
 
 class MeetingSerializer(serializers.ModelSerializer):
