@@ -19,9 +19,9 @@
                                     <div class="minister-big-photo {% if m.votes.count == 0 %} disabled {% endif %}">
                                         <a href="{% url 'minister' m.id %}">
                                             {% if 'http' in m.photo %}
-                                                <img src="{{ m.photo }}.jpg">
+                                                <img class="minister-image" src="{{ m.photo }}.jpg">
                                             {% else %}
-                                                <img src="{{ MEDIA_URL }}{{ m.photo }}.jpg">
+                                                <img class="minister-image" src="{{ MEDIA_URL }}{{ m.photo }}.jpg">
                                             {% endif %}
 
                                             <h2 style="text-align: center">{{ m.name }}</h2>

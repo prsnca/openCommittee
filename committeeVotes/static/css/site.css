@@ -92,10 +92,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .minister-big-photo {
     position: relative;
-    height: 450px;
-    width: 300px;
     display: inline-block;
     margin: 25px !important;
+}
+
+.minister-image {
+    max-width: 300px;
 }
 
 #footer {
