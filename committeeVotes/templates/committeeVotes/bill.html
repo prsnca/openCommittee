@@ -5,7 +5,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12" style="text-align: center">
                 <a {% if bill.oknesset_url %}
                     target="_blank" href="{{ bill.oknesset_url }}"
                 {% else %}
@@ -16,9 +16,11 @@
                     </h1>
                 </a>
             </div>
+        </div>
+        <div class="row">
             {% if not bill.passed == None %}
-                <div class="col-md-2 decision">
-                    <h2 class="pull-left" title="החלטת הועדה">
+                <div class="col-md-12 decision">
+                    <h2 style="margin-top: 0px" title="החלטת הועדה">
                         {% if bill.passed %}
                             <span class="badge" style="background-color:green; vertical-align:middle; font-size:24px;">
                         עבר בועדה
@@ -33,6 +35,9 @@
                 </div>
             {% endif %}
 
+        </div>
+        <div class="row">
+            <div style="font-size: 20px; text-align: center;" class="col-md-12">עלה להצבעה בישיבה שנערכה ב-<a href="{% url 'meeting' meeting.id %}">{{ meeting.took_place }}</a></div>
         </div>
 
         <div class="row">

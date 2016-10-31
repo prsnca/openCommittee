@@ -51,6 +51,7 @@ def bill(request, bill_id):
     bill = get_object_or_404(Bill, pk=bill_id)
     votes = Vote.objects.select_related('minister').filter(bill=bill)
     vote_types = VoteType.objects.all().order_by('id')
+    meeting = votes[0].meeting
     votes_by_type = {}
     for vt in vote_types:
         votes_by_type[vt.typeName] = votes.filter(vote=vt)
@@ -60,7 +61,8 @@ def bill(request, bill_id):
     non_voting_ministers = Minister.objects.exclude(id__in=voted_ministers)
     context = {'bill': bill,
                'votes_by_type': sorted(votes_by_type.iteritems()),
-               'unknown_ministers': non_voting_ministers}
+               'unknown_ministers': non_voting_ministers,
+               'meeting': meeting}
     return render(request, 'committeeVotes/bill.html', context)
 
 def minister_details(request, minister_id):
