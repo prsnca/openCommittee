@@ -12,7 +12,7 @@ admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'bills', views.BillViewSet)
 router.register(r'ministers', views.MinisterViewSet)
-router.register(r'meetings',views.MeetingsViewSet)
+router.register(r'meetings', views.MeetingsViewSet)
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'openCommittee.views.home', name='home'),

@@ -4,12 +4,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from committeeVotes.models import Bill, Minister, Vote, VoteType, Meeting
-from committeeVotes.serializers import BillSerializer, MinisterSerializer,MinisterListSerializer, MeetingSerializer, MeetingListSerializer, MeetingDetailSerializer
+from committeeVotes.serializers import MinisterVoteSerializer, BillSerializer, BillVoteSerializer, BillDetailSerializer, MinisterSerializer, MinisterListSerializer, MeetingSerializer, MeetingDetailSerializer, MeetingListSerializer, MeetingDetailSerializer
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from committeeVotes.serializers import BillSerializer, MinisterSerializer
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import detail_route
 import json
 
 def index(request):
@@ -102,9 +104,14 @@ def bills(request):
     return render(request, 'committeeVotes/bills.html', context)
 
 
-class BillViewSet(viewsets.ModelViewSet):
+class BillViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Bill.objects.all()
-    serializer_class = BillSerializer
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BillSerializer
+        if self.action == 'retrieve':
+            return BillVoteSerializer
+        return None
 
 
 def ministers(request):
@@ -113,16 +120,28 @@ def ministers(request):
     return render(request, 'committeeVotes/ministers.html', context)
 
 
-class MinisterViewSet(viewsets.ModelViewSet):
+class MinisterViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Minister.objects.all()
     def get_serializer_class(self):
-        print "serializer_class"
         if self.action == 'list':
-            print "MinisterList"
             return MinisterListSerializer
         if self.action == 'retrieve':
             return MinisterSerializer
         return None
+
+    @detail_route()
+    def votes(self, request, pk):
+        minister = self.get_object()
+        votes = minister.votes.all()
+        page = self.paginate_queryset(votes)
+        if page is not None:
+            serializer = MinisterVoteSerializer(page, many=True, context={'request': request})
+            return self.get_paginated_response(serializer.data)
+        serializer = MinisterVoteSerializer(votes, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+
 
 def meetings(request):
     meetings = Meeting.objects.all().order_by('-id')
@@ -130,7 +149,7 @@ def meetings(request):
     return render(request, 'committeeVotes/meetings.html', context)
 
 
-class MeetingsViewSet(viewsets.ModelViewSet):
+class MeetingsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Meeting.objects.annotate(
         proposed_bill_count=Count('proposed_bills')).all()
 

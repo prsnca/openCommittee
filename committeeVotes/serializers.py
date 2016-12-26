@@ -41,7 +41,20 @@ class VoteSerializer(serializers.ModelSerializer):
 
 class VoteListSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
-        return obj.minister.name
+        return obj.minister
+
+
+class MinisterListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Minister
+        fields = ('id', 'name', 'photo_url', 'coop')
+
+
+class VoteBillSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bill
+        fields = ('id', 'name')
 
 
 class BillSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSerializer):
@@ -55,11 +68,25 @@ class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSeriali
     yay = serializers.SerializerMethodField()
     nay = serializers.SerializerMethodField()
     sustained = serializers.SerializerMethodField()
+    others = serializers.SerializerMethodField()
 
     def get_votes(self, bill, voteTypeName):
         voteType = VoteType.objects.get(typeName=voteTypeName)
-        qs = Vote.objects.filter(vote=voteType, bill=bill)
-        serializer = VoteListSerializer(instance=qs, many=True)
+        votes = Vote.objects.select_related('minister').filter(vote=voteType, bill=bill)
+        voted_ministers = []
+        for v in votes:
+            voted_ministers.append(v.minister.id)
+        qs = Minister.objects.filter(id__in=voted_ministers)
+        serializer = MinisterListSerializer(instance=qs, many=True)
+        return serializer.data
+
+    def get_other_ministers(self, bill):
+        votes = Vote.objects.select_related('minister').filter(bill=bill)
+        voted_ministers = []
+        for v in votes:
+            voted_ministers.append(v.minister.id)
+        qs = Minister.objects.exclude(id__in=voted_ministers)
+        serializer = MinisterListSerializer(instance=qs, many=True)
         return serializer.data
 
     def get_yay(self, bill):
@@ -71,15 +98,12 @@ class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSeriali
     def get_sustained(self, bill):
         return self.get_votes(bill, u'נמנע')
 
+    def get_others(self, bill):
+        return self.get_other_ministers(bill)
+
     class Meta:
         model = Bill
-        fields = ('id', 'name', 'oknesset_url', 'passed', 'yay', 'nay', 'sustained')
-
-
-class MinisterListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Minister
-        fields = ('id', 'name', 'photo_url', 'coop')
+        fields = ('id', 'name', 'oknesset_url', 'passed', 'yay', 'nay', 'sustained', 'others')
 
 
 class MinisterSerializer(MinisterListSerializer):
@@ -87,6 +111,17 @@ class MinisterSerializer(MinisterListSerializer):
     class Meta(MinisterListSerializer.Meta):
         fields = MinisterListSerializer.Meta.fields + ('title',
                   'facebook', 'twitter', 'mail', 'phone', 'oknesset')
+
+
+class MinisterVoteSerializer(serializers.ModelSerializer):
+    bill = VoteBillSerializer()
+    vote = serializers.StringRelatedField()
+
+    class Meta:
+        model = Vote
+        fields = ('bill', 'vote')
+
+
 
 
 class MeetingListSerializer(serializers.ModelSerializer):
@@ -109,14 +144,52 @@ class MinisterInMeetingSerializer(serializers.ModelSerializer):
 
 class MeetingSerializer(serializers.ModelSerializer):
     proposed_bills = BillSerializer(many=True, read_only=True)
+    voting_ministers = MinisterListSerializer(many=True, read_only=True)
+    missing_ministers = MinisterListSerializer(many=True, read_only=True)
+    non_voting_ministers = serializers.SerializerMethodField()
+
+    def get_non_voting_ministers(self, meeting):
+        voting_ministers = meeting.voting_ministers.all()
+        voting_ids = voting_ministers.values_list('id', flat=True)
+        missing_ministers = meeting.missing_ministers.all()
+        missing_ids = missing_ministers.values_list('id', flat=True)
+        qs = Minister.objects.exclude(id__in=voting_ids).exclude(id__in=missing_ids)
+        serializer = MinisterListSerializer(instance=qs, many=True)
+        return serializer.data
 
     class Meta:
         model = Meeting
 
 
-class MeetingDetailSerializer(serializers.ModelSerializer):
+class MeetingBillSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Meeting
+        fields = ('id', 'took_place')
+
+
+class BillDetailSerializer(serializers.ModelSerializer):
+    votes = VoteSerializer(many=True, read_only=True)
+    meeting = MeetingBillSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Bill
+
+
+class MeetingDetailSerializer(serializers.HyperlinkedModelSerializer):
     proposed_bills = BillVoteSerializer(many=True, read_only=True)
-    voting_ministers = MinisterInMeetingSerializer(many=True, read_only=True)
+    voting_ministers = MinisterListSerializer(many=True, read_only=True)
+    missing_ministers = MinisterListSerializer(many=True, read_only=True)
+    non_voting_ministers = serializers.SerializerMethodField()
+
+    def get_non_voting_ministers(self, meeting):
+        voting_ministers = meeting.voting_ministers.all()
+        voting_ids = voting_ministers.values_list('id', flat=True)
+        missing_ministers = meeting.missing_ministers.all()
+        missing_ids = missing_ministers.values_list('id', flat=True)
+        qs = Minister.objects.exclude(id__in=voting_ids).exclude(id__in=missing_ids)
+        serializer = MinisterListSerializer(instance=qs, many=True)
+        return serializer.data
 
     class Meta:
         model = Meeting
