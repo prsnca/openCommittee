@@ -36,9 +36,11 @@
             {% endif %}
 
         </div>
+        {% if meeting %}
         <div class="row">
             <div style="font-size: 20px; text-align: center;" class="col-md-12">עלה להצבעה בישיבה שנערכה ב-<a href="{% url 'meeting' meeting.id %}">{{ meeting.took_place }}</a></div>
         </div>
+        {% endif %}
 
         <div class="row">
             {% for vote_type, votes in votes_by_type %}

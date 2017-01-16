@@ -64,7 +64,7 @@ def bill(request, bill_id):
     bill = get_object_or_404(Bill, pk=bill_id)
     votes = Vote.objects.select_related('minister').filter(bill=bill)
     vote_types = VoteType.objects.all().order_by('id')
-    meeting = votes[0].meeting
+    meeting = votes[0].meeting if len(votes) > 0 else None
     votes_by_type = {}
     for vt in vote_types:
         votes_by_type[vt.typeName] = votes.filter(vote=vt)
