@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'committeeVotes',
     'rest_framework',
+    'corsheaders',
 )
 
 REST_FRAMEWORK = {
@@ -49,6 +50,8 @@ REST_FRAMEWORK = {
 
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,6 +88,15 @@ DATABASES = {
 SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2'
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+)
+
+CORS_ALLOW_METHODS = (
+    'GET',
+    'OPTIONS',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
