@@ -13,7 +13,7 @@ router = routers.DefaultRouter()
 router.register(r'bills', views.BillViewSet)
 router.register(r'ministers', views.MinisterViewSet)
 router.register(r'meetings', views.MeetingsViewSet)
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'openCommittee.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -41,4 +41,4 @@ urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
