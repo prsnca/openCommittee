@@ -45,6 +45,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ],
+    'DEFAULT_PAGINATION_CLASS': 'committeeVotes.customclasses.standard_pagination.StandardResultsSetPagination',
     'PAGE_SIZE': 10
 }
 
@@ -136,11 +137,9 @@ if os.environ.get('DATABASE_URL'): # Heroku
         os.path.join(BASE_DIR, '..', 'committeeVotes/static'),
     )
 
-    REST_FRAMEWORK = {
-        'DEFAULT_RENDERER_CLASSES': (
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
             'rest_framework.renderers.JSONRenderer',
         )
-    }
 
 try:
     from local_settings import *
