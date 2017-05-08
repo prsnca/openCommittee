@@ -69,6 +69,7 @@ class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSeriali
     nay = serializers.SerializerMethodField()
     sustained = serializers.SerializerMethodField()
     others = serializers.SerializerMethodField()
+    meeting = serializers.SerializerMethodField()
 
     def get_votes(self, bill, voteTypeName):
         voteType = VoteType.objects.get(typeName=voteTypeName)
@@ -89,6 +90,12 @@ class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSeriali
         serializer = MinisterListSerializer(instance=qs, many=True)
         return serializer.data
 
+    def get_meeting(self, bill):
+        votes = Vote.objects.select_related('minister').filter(bill=bill)
+        meeting = votes[0].meeting if len(votes) > 0 else None
+        serializer = MeetingBillSerializer(instance=meeting)
+        return serializer.data
+
     def get_yay(self, bill):
         return self.get_votes(bill, u'בעד')
 
@@ -103,7 +110,7 @@ class BillVoteSerializer(DynamicFieldsMixin, serializers.HyperlinkedModelSeriali
 
     class Meta:
         model = Bill
-        fields = ('id', 'name', 'oknesset_url', 'passed', 'yay', 'nay', 'sustained', 'others')
+        fields = ('id', 'name', 'oknesset_url', 'passed', 'yay', 'nay', 'sustained', 'others', 'meeting')
 
 
 class MinisterSerializer(MinisterListSerializer):
