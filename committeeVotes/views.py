@@ -150,7 +150,7 @@ def meetings(request):
 
 
 class MeetingsViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Meeting.objects.annotate(
+    queryset = Meeting.objects.order_by('-took_place').annotate(
         proposed_bill_count=Count('proposed_bills')).all()
 
     def get_serializer_class(self):
